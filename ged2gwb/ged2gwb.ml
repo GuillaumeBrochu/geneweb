@@ -1,5 +1,5 @@
 (* camlp4r pa_extend.cmo ../src/pa_lock.cmo *)
-(* $Id: ged2gwb.ml,v 4.46 2004-12-14 09:30:09 ddr Exp $ *)
+(* $Id: ged2gwb.ml,v 4.46.2.1 2005-02-28 09:39:09 ddr Exp $ *)
 (* Copyright (c) 1998-2005 INRIA *)
 
 open Def;
@@ -733,8 +733,11 @@ EXTEND
       | ID "ELL" -> 13 ] ]
   ;
   int:
-    [ [ i = INT -> int_of_string i
-      | "-"; i = INT -> - int_of_string i ] ]
+    [ [ i = INT ->
+          try int_of_string i with [ Failure _ -> raise Stream.Failure ]
+      | "-"; i = INT ->
+          try (- int_of_string i) with
+          [ Failure _ -> raise Stream.Failure ] ] ]
   ;
 END;
 
