@@ -1,5 +1,5 @@
 (* camlp4r ./pa_html.cmo *)
-(* $Id: updateIndOk.ml,v 4.18 2004-12-14 09:30:18 ddr Exp $ *)
+(* $Id: updateIndOk.ml,v 4.18.2.1 2006-01-03 12:04:10 ddr Exp $ *)
 (* Copyright (c) 1998-2005 INRIA *)
 
 open Config;
@@ -241,7 +241,6 @@ value reconstitute_person conf =
     | Some "F" -> Female
     | _ -> Neuter ]
   in
-  let public = False in
   let birth = Update.reconstitute_date conf "birth" in
   let birth_place = only_printable (get conf "birth_place") in
   let bapt = Adef.codate_of_od (Update.reconstitute_date conf "bapt") in

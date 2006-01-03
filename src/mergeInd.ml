@@ -1,5 +1,5 @@
 (* camlp4r ./pa_html.cmo ./pa_lock.cmo *)
-(* $Id: mergeInd.ml,v 4.26 2004-12-14 09:30:14 ddr Exp $ *)
+(* $Id: mergeInd.ml,v 4.26.2.1 2006-01-03 12:04:10 ddr Exp $ *)
 (* Copyright (c) 1998-2005 INRIA *)
 
 open Config;
@@ -629,7 +629,7 @@ value print_kill_ancestors conf base =
       match find_person_in_env conf base "" with
       [ Some p ->
           let key = (sou base p.first_name, sou base p.surname, p.occ) in
-          let bfile = Util.base_path [] (conf.bname ^ ".lck") in
+          let _ = Util.base_path [] (conf.bname ^ ".lck") in
           let nb_ind = ref 0 in
           let nb_fam = ref 0 in
           do {

@@ -1,5 +1,5 @@
 (* camlp4r ./pa_html.cmo *)
-(* $Id: updateFamOk.ml,v 4.38 2004-12-14 09:30:18 ddr Exp $ *)
+(* $Id: updateFamOk.ml,v 4.38.2.1 2006-01-03 12:04:10 ddr Exp $ *)
 (* Copyright (c) 1998-2005 INRIA *)
 
 open Config;
@@ -416,7 +416,6 @@ value effective_mod conf base sfam scpl sdes =
   let nfath = poi base (father ncpl) in
   let nmoth = poi base (mother ncpl) in
   let nfath_u = uoi base (father ncpl) in
-  let nmoth_u = uoi base (mother ncpl) in
   do {
     if sfam.relation <> NoSexesCheck then do {
       match nfath.sex with

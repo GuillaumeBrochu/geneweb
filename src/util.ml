@@ -1,5 +1,5 @@
 (* camlp4r ./pa_lock.cmo *)
-(* $Id: util.ml,v 4.95 2004-12-14 09:53:21 ddr Exp $ *)
+(* $Id: util.ml,v 4.95.2.1 2006-01-03 12:04:10 ddr Exp $ *)
 (* Copyright (c) 1998-2005 INRIA *)
 
 open Def;
@@ -1234,7 +1234,7 @@ value tag_id s i =
     if i = String.length s then Buff.get len
     else
       match s.[i] with
-      [ 'a'..'z' | 'A'..'Z' | '0'..'9' as c ->
+      [ 'a'..'z' | 'A'..'Z' | '0'..'9' ->
           loop (i + 1) (Buff.store len (Char.lowercase s.[i]))
       | _ -> if len = 0 then loop (i + 1) 0 else Buff.get len ]
 ;
@@ -1783,7 +1783,6 @@ value find_person_in_env conf base suff =
                  if is_hidden p then l else [p :: l])
             [] (person_ht_find_all base k)
           in
-          let k = Name.lower k in
           try
             let r =
               List.find
@@ -1944,7 +1943,6 @@ value auto_image_file conf base p =
 
 value image_and_size conf base p image_size =
   if not conf.no_image && authorized_age conf base p then
-    let image_txt = capitale (transl_nth conf "image/images" 0) in
     match sou base p.image with
     [ "" ->
         match auto_image_file conf base p with

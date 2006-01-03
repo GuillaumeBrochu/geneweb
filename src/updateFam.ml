@@ -1,5 +1,5 @@
 (* camlp4r ./pa_html.cmo *)
-(* $Id: updateFam.ml,v 4.43 2004-12-14 09:30:18 ddr Exp $ *)
+(* $Id: updateFam.ml,v 4.43.2.1 2006-01-03 12:04:10 ddr Exp $ *)
 (* Copyright (c) 1998-2005 INRIA *)
 
 open Def;
@@ -77,7 +77,7 @@ value eval_base_env_variable conf v =
 
 value get_create (fn, sn, oc, create, var) = create;
 
-value rec eval_variable conf base env ((fam, cpl, des) as fcd) =
+value rec eval_variable conf base env (fam, cpl, des) =
   fun
   [ ["father"; s] -> VVind (father cpl) s
   | ["father"; "create"; s] -> VVcreate (get_create (father cpl)) s
@@ -168,7 +168,7 @@ value eval_int_env var env =
   | _ -> "" ]
 ;
 
-value try_eval_gen_variable conf base env ((fam, cpl, des) as fcd) =
+value try_eval_gen_variable conf base env (fam, cpl, des) =
   fun
   [ "cnt" -> eval_int_env "cnt" env
   | "comment" -> quote_escaped fam.comment

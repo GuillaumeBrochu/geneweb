@@ -1,4 +1,4 @@
-(* $Id: iobase.ml,v 4.33 2004-12-14 09:30:12 ddr Exp $ *)
+(* $Id: iobase.ml,v 4.33.2.1 2006-01-03 12:04:10 ddr Exp $ *)
 (* Copyright (c) 1998-2005 INRIA *)
 
 open Def;
@@ -1353,7 +1353,7 @@ value just_copy bname what oc oc_acc =
     let couples_array_pos = input_binary_int ic in
     let descends_array_pos = input_binary_int ic in
     let strings_array_pos = input_binary_int ic in
-    let norigin_file = input_value ic in
+    let _ = input_value ic in
     let (beg_pos, end_pos, beg_acc_pos, array_len) =
       match what with
       [ "persons" ->

@@ -1,4 +1,4 @@
-(* $Id: gwu.ml,v 4.26 2004-12-14 09:30:12 ddr Exp $ *)
+(* $Id: gwu.ml,v 4.26.2.1 2006-01-03 12:04:10 ddr Exp $ *)
 (* Copyright (c) 1998-2005 INRIA *)
 
 open Def;
@@ -1242,7 +1242,6 @@ value main () =
       let _ = base.data.descends.array () in
       ()
     else ();
-    let oc_list = ref [] in
     let out_oc =
       if out_file.val = "" then stdout else open_out out_file.val
     in

@@ -1,5 +1,5 @@
 (* camlp4r ./def.syn.cmo ./pa_html.cmo *)
-(* $Id: ascend.ml,v 4.39 2004-12-14 09:30:10 ddr Exp $ *)
+(* $Id: ascend.ml,v 4.39.2.1 2006-01-03 12:04:10 ddr Exp $ *)
 (* Copyright (c) 1998-2005 INRIA *)
 
 open Config;
@@ -613,10 +613,6 @@ value print_notes_ref conf base p wn n child_n =
 value print_family_long conf base ws wn all_gp ifam nth moth_nb =
   let cpl = coi base ifam in
   let des = doi base ifam in
-  let auth =
-    authorized_age conf base (pget conf base (father cpl)) &&
-    authorized_age conf base (pget conf base (mother cpl))
-  in
   do {
     Wserver.wprint "<p>\n... ";
     Wserver.wprint "%s" (transl conf "having as children");
@@ -764,7 +760,6 @@ value print_generation_person_long conf base ws wn all_gp last_gen gp =
         | _ -> () ]
       }
   | GP_same n1 n2 ip ->
-      let p = pget conf base ip in
       do {
         Wserver.wprint "<p>\n";
         stag "strong" begin
@@ -1489,7 +1484,7 @@ value print_missing_ancestors_alphabetically conf base v spouses_included p =
         (fun (n, el) ->
            let ell =
              List.fold_left
-               (fun ell ((a, p) as e) ->
+               (fun ell (a, p) ->
                   match ell with
                   [ [(a1, al, p1) :: el] when p1 == p ->
                       [(a, [a1 :: al], p) :: el]

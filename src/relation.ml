@@ -1,5 +1,5 @@
 (* camlp4r ./pa_html.cmo *)
-(* $Id: relation.ml,v 4.50 2004-12-14 09:30:17 ddr Exp $ *)
+(* $Id: relation.ml,v 4.50.2.1 2006-01-03 12:04:10 ddr Exp $ *)
 (* Copyright (c) 1998-2005 INRIA *)
 
 open Def;
@@ -72,7 +72,6 @@ value print_menu conf base p =
       Wserver.wprint " %s..." (transl_nth conf "and" 0)
     }
   in
-  let is = index_of_sex p.sex in
   let u = uget conf base p.cle_index in
   do {
     header conf title;
@@ -114,7 +113,6 @@ value print_menu conf base p =
         end;
         Array.iter
           (fun ifam ->
-             let fam = foi base ifam in
              let cpl = coi base ifam in
              let c = spouse p.cle_index cpl in
              let c = pget conf base c in

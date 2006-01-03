@@ -1,5 +1,5 @@
 (* camlp4r ../src/pa_lock.cmo *)
-(* $Id: gwtp.ml,v 4.24 2004-12-14 09:53:16 ddr Exp $ *)
+(* $Id: gwtp.ml,v 4.24.2.1 2006-01-03 12:04:10 ddr Exp $ *)
 (* Copyright (c) 1998-2005 INRIA *)
 
 open Printf;
@@ -737,7 +737,7 @@ value ged2gwb b =
     Filename.concat gwtp_tmp.val b ^ " > " ^
     Filename.concat gwtp_tmp.val (b ^ ".log")
   in
-  let r = Sys.command comm in ()
+  let _ = Sys.command comm in ()
 ;
 
 value move_gedcom_to_old b =
