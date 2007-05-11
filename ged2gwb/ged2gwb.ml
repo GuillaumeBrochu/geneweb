@@ -1,5 +1,5 @@
 (* camlp4r pa_extend.cmo ../src/pa_lock.cmo *)
-(* $Id: ged2gwb.ml,v 4.46.2.2 2006-01-03 12:04:10 ddr Exp $ *)
+(* $Id: ged2gwb.ml,v 4.46.2.3 2007-05-11 09:55:39 ddr Exp $ *)
 (* Copyright (c) 1998-2005 INRIA *)
 
 open Def;
@@ -476,7 +476,7 @@ and text len =
 
 value make_date_lexing s = Stream.from (fun _ -> Some (lexing_date s));
 
-value tparse (p_con, p_prm) = None;
+value tparse = Token.default_match;
 
 value using_token (p_con, p_prm) =
   match p_con with
@@ -489,11 +489,12 @@ value using_token (p_con, p_prm) =
 ;
 
 value date_lexer =
-  {Token.func s =
+  {Token.tok_func s =
      (make_date_lexing s,
       fun _ -> ifdef OCAML_308 then Token.dummy_loc else (0, 0));
-   Token.using = using_token; Token.removing _ = (); Token.tparse = tparse;
-   Token.text _ = "<tok>"}
+   Token.tok_using = using_token; Token.tok_removing _ = ();
+   Token.tok_match = tparse; Token.tok_text _ = "<tok>";
+   Token.tok_comm = None}
 ;
 
 type range 'a =
@@ -502,7 +503,7 @@ type range 'a =
   | BeginEnd of 'a and 'a ]
 ; 
 
-value date_g = Grammar.create date_lexer;
+value date_g = Grammar.gcreate date_lexer;
 value date_value = Grammar.Entry.create date_g "date value";
 value date_interval = Grammar.Entry.create date_g "date interval";
 value date_value_recover = Grammar.Entry.create date_g "date value";
