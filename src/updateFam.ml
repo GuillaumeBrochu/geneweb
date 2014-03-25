@@ -232,7 +232,7 @@ and eval_simple_var conf base env (fam, cpl, des) loc =
                   let k =
                     if i >= 0 && i < Array.length e.efam_witnesses then
                       fst e.efam_witnesses.(i)
-                    else if 
+                    else if
                       i >= 0 && i < 2 && Array.length e.efam_witnesses < 2
                     then
                       ("", "", 0, Update.Create Neuter None, "")
@@ -257,7 +257,7 @@ and eval_simple_var conf base env (fam, cpl, des) loc =
                     match snd e.efam_witnesses.(i) with
                     [ Witness_GodParent -> str_val "godp"
                     | _ -> str_val "" ]
-                  else if 
+                  else if
                     i >= 0 && i < 2 && Array.length e.efam_witnesses < 2
                   then
                     str_val ""
@@ -306,7 +306,7 @@ and eval_date_var_aux od =
       | None -> "" ]
   | "orday" ->
       match od with
-      [ Some (Dgreg {prec = OrYear d2} _) -> 
+      [ Some (Dgreg {prec = OrYear d2} _) ->
           if d2.day2 = 0 then "" else string_of_int d2.day2
       | Some (Dgreg {prec = YearInt d2} _) ->
           if d2.day2 = 0 then "" else string_of_int d2.day2
@@ -314,13 +314,13 @@ and eval_date_var_aux od =
   | "ormonth" ->
       match od with
       [ Some (Dgreg {prec = OrYear d2} cal) ->
-          if d2.month2 = 0 then "" 
-          else 
+          if d2.month2 = 0 then ""
+          else
             match cal with
             [ Dfrench -> short_f_month d2.month2
             | _ -> string_of_int d2.month2 ]
       | Some (Dgreg {prec = YearInt d2} cal) ->
-          if d2.month2 = 0 then "" 
+          if d2.month2 = 0 then ""
           else
             match cal with
             [ Dfrench -> short_f_month d2.month2
@@ -364,7 +364,7 @@ and eval_event_var conf base env e =
   fun
   [ ["e_name"] ->
       match e with
-      [ Some {efam_name = name} -> 
+      [ Some {efam_name = name} ->
           match name with
           [ Efam_Marriage -> str_val "#marr"
           | Efam_NoMarriage -> str_val "#nmar"

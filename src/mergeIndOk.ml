@@ -394,7 +394,7 @@ value redirect_relations_of_added_related base p ip2 rel_chil =
                  List.fold_right
                    (fun e (pc_fevents, mod_pc, p_related, mod_p) ->
                       let (e, mod_pc, p_related, mod_p) =
-                                 let (p_related, mod_p) =
+                        let (p_related, mod_p) =
                           loop (p_related, mod_p) 0
                           where rec loop (p_related, mod_p) j =
                             if j = Array.length e.efam_witnesses then
@@ -406,10 +406,10 @@ value redirect_relations_of_added_related base p ip2 rel_chil =
                                   e.efam_witnesses.(j) := (p.key_index, wk);
                                   if List.mem ipc p_related then
                                     (p_related, mod_p)
-                                   else ([ipc :: p_related], True)
-                               }
+                                  else ([ipc :: p_related], True)
+                                }
                                 else (p_related, mod_p)
-                        in
+                              in
                               loop (p_related, mod_p) (j + 1)
                         in
                         (e, True, p_related, mod_p)
