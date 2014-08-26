@@ -2921,9 +2921,6 @@ and eval_bool_person_field conf base env (p, p_auth) =
   | "has_occupation" -> p_auth && sou base (get_occupation p) <> ""
   | "has_parents" -> get_parents p <> None
   | "has_possible_duplications" -> has_possible_duplications conf base p
-  | "has_public_name" ->
-      if not p_auth && (is_hide_names conf p) then False
-      else sou base (get_public_name p) <> ""
   | "has_psources" ->
       if (is_hide_names conf p) && not p_auth then False
       else sou base (get_psources p) <> ""
@@ -2935,6 +2932,9 @@ and eval_bool_person_field conf base env (p, p_auth) =
              let fam = foi base ifam in
              p_auth && sou base (get_fsources fam) <> "")
           (Array.to_list (get_family p))
+  | "has_public_name" ->
+      if not p_auth && (is_hide_names conf p) then False
+      else sou base (get_public_name p) <> ""
   | "has_qualifiers" ->
       if not p_auth && (is_hide_names conf p) then False
       else get_qualifiers p <> []
