@@ -2935,17 +2935,6 @@ and eval_bool_person_field conf base env (p, p_auth) =
   | "has_public_name" ->
       if not p_auth && (is_hide_names conf p) then False
       else sou base (get_public_name p) <> ""
-  | "has_psources" ->
-      if (is_hide_names conf p) && not p_auth then False
-      else sou base (get_psources p) <> ""
-  | "has_fsources" ->
-      if (is_hide_names conf p) && not p_auth then False
-      else
-        List.exists
-          (fun ifam ->
-             let fam = foi base ifam in
-             p_auth && sou base (get_fsources fam) <> "")
-          (Array.to_list (get_family p))
   | "has_qualifiers" ->
       if not p_auth && (is_hide_names conf p) then False
       else get_qualifiers p <> []
