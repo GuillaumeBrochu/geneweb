@@ -1,11 +1,11 @@
 #!/bin/bash
 
-OCAML_MIN_VER="4.02"
+OCAML_MAX_VER="3.12.1"
 
-verge() {
+ver_se() {
     # osx doesn't have sort -V
-    # [  "$2" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]
-    [ "$2" = "`echo -e "$1\n$2" | tr ' ' '\n' | sort -n | head -n1`" ]
+    # [  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]
+    [ "$1" = "`echo -e "$1\n$2" | tr ' ' '\n' | sort -n | head -n1`" ]
 }
 
 if ocamlc -v >/dev/null 2>&1; then
@@ -18,10 +18,10 @@ fi
 
 OCAML_VER="`ocamlc -version`"
 
-if verge "$OCAML_VER" "$OCAML_MIN_VER"; then
-    echo "ocamlc version $OCAML_VER >= $OCAML_MIN_VER ... OK"
+if ver_se "$OCAML_VER" "$OCAML_MAX_VER"; then
+    echo "ocamlc version $OCAML_VER <= $OCAML_MAX_VER ... OK"
 else
-    echo "OCaml version $OCAML_MIN_VER or newer needed"
+    echo "OCaml version $OCAML_MAX_VER or older needed"
     echo "Configuration script failed!"
     exit 1
 fi
@@ -34,13 +34,13 @@ else
     exit 1
 fi
 
-if [ "`echo 'print_endline Sys.os_type;;' | ocaml -stdin -noprompt`" = "Unix" ]; then
-    echo "OS type ... Unix"
-    cp tools/Makefile.inc.unix tools/Makefile.inc
+echo "print_endline Sys.os_type;;" > tools/tmp
+if [ "`ocaml tools/tmp`" = "Unix" ]; then
+  cp tools/Makefile.inc.unix tools/Makefile.inc
 else
-    echo "OS type ... Windows"
-    cp tools/Makefile.inc.win tools/Makefile.inc
+  cp tools/Makefile.inc.win tools/Makefile.inc
 fi
+rm tools/tmp
 
 D_GW_DIR=`pwd`/
 if test -e "tools/Makefile.inc"; then
