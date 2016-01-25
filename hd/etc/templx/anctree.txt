@@ -1,7 +1,7 @@
 %if;(evar.t = "T")%doctype_transitional;%else;%doctype;%end;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: anctree.txt, Template x v 6.06b-GB 2016/01/09 12:00:00 ddr/dd Exp $ -->
+  <!-- $Id: anctree.txt, Template x v 6.06b-GB 2016/01/24 12:00:00 ddr/dd Exp $ -->
   <!-- copyright (c) 1998-2012 INRIA -->
   <title>%nn;
     %if;(evar.t = "A")[*male line/female line]0%nn;
@@ -203,16 +203,12 @@
 %let;central_person;%first_name_key_strip;%sp;%surname_key_strip;%in;
 %let;nb_gena;
   %if;(evar.t = "A" or evar.t = "C")
-    %if;(bvar.max_anc_level = "")
-      %apply;min(evar.v)
-    %else;
-      %apply;min(evar.v, bvar.max_anc_level)
-    %end;
+    %evar.v
   %else;
     %if;(bvar.max_anc_tree = "")
       %apply;min(evar.v, max_anc_level, 7)
     %else;
-      %apply;min(evar.v, max_anc_level, bvar.max_anc_tree, 7)
+      %apply;min(evar.v, max_anc_level, bvar.max_anc_tree)
     %end;
   %end;
 %in;
