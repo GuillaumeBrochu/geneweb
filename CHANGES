@@ -1,10 +1,14 @@
+GeneWeb version 6.08.GB.002
+---------------------------
+
+* Just minor changes
+
 GeneWeb version 6.08.GB.001
 ---------------------------
 
-Fix : https://github.com/geneanet/geneweb/issues/20 for Version 6
-Fix : https://github.com/geneanet/geneweb/issues/21 for Version 6
-Update makefiles for easier compilation with OPAM
-
+* Fix : https://github.com/geneanet/geneweb/issues/20 for Version 6
+* Fix : https://github.com/geneanet/geneweb/issues/21 for Version 6
+* Update makefiles for easier compilation with OPAM
 
 GeneWeb version 6.08
 --------------------
