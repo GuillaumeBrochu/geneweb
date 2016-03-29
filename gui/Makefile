@@ -3,7 +3,7 @@
 
 include ../tools/Makefile.config
 
-LABLGTK2=+lablgtk2
+LABLGTK2=`ocamlfind query lablgtk2`/
 OCAMLC=ocamlc.opt
 OCAMLOPT=ocamlopt.opt -annot
 GWB=..
@@ -14,7 +14,7 @@ OBJS=../src/version.cmo ../src/iovalue.cmo ../src/buff.cmo \
 OCAMLI=-I ../src -I $(LABLGTK2)
 TEST_DIR=test $$(basename "$<") = "$<" || { echo "Please run 'make' in directory '$$(dirname "$<")' first"; exit 1; }
 
-all:: opt
+#all:: opt
 
 out:: gui.out
 	$(RM) gui
@@ -32,14 +32,18 @@ gui.opt: $(OBJS:.cmo=.cmx)
 
 %.cmo: %.ml
 	@$(TEST_DIR)
-	ocamlc -pp camlp5r $(OCAMLI) -I +lablgtk2 -c $<
+	ocamlc -pp camlp5r $(OCAMLI) -I $(LABLGTK2) -c $<
 
-clean::
-	$(RM) gui
+.PHONY: clean
+clean:
+	$(RM) *.out *.opt *.cm[oixa] *.cmxa *.pp[oi] *.o *.a *.obj *.lib \
+	*.lck *.bak *~ .#* *.annot
+	$(RM) gui *.bat
+	$(RM) -r test
 
 .PHONY: depend
 depend:
-	export LC_ALL=C; TOP=$(GWB) $(GWB)/tools/camlp5_depend.sh $(CAMLP5F) $(OCAMLI) -- $$(ls *.mli *.ml) | sed -e 's|\.\.|$$(GWB)|g' > .depend
+	$(ROOT)/tools/camlp5_depend.sh $(CAMLP5F) $(OCAMLI) -- *.ml* > .depend
 
 .depend:
 	@if [ ! -e $@ ]; then $(MAKE) -o $@ depend; fi

@@ -13,6 +13,7 @@ out:
 	cd gwb2ged && $(MAKE) $@
 	cd setup && $(MAKE) $@
 	cd gwtp && $(MAKE) $@
+	cd gui && $(MAKE) $@
 
 opt:
 	cd wserver && $(MAKE) $@
@@ -30,6 +31,7 @@ endif
 	cd contrib/misc && $(MAKE) all
 	cd contrib/gwFix && $(MAKE) all
 	cd contrib/history && $(MAKE) all
+	cd gui && $(MAKE) all
 
 install:
 	mkdir -p $(PREFIX)/bin
@@ -140,6 +142,7 @@ clean:
 	cd contrib/gwFix && $(MAKE) $@
 	cd contrib/history && $(MAKE) $@
 	cd api && $(MAKE) $@
+	cd gui && $(MAKE) $@
 	$(RM) -r $(DESTDIR)
 	$(RM) *~ .#*
 
@@ -153,3 +156,4 @@ depend:
 	cd gwtp && $(MAKE) $@
 	cd api && $(MAKE) $@
 	cd api/service && $(MAKE) $@
+	cd gui && $(MAKE) $@
