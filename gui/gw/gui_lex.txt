@@ -123,7 +123,7 @@ fr: Configurez éventuellement le numéro de port
 
     select browser
 en: Select the browser you want to use
-fr: Selectionnez le navigateur que vous voulez utiliser
+fr: Selectionnez le navigateur à utiliser
 
     save preferences
 en: Save preference
@@ -145,8 +145,8 @@ fr: Configuration du port
 en: Setup browser
 fr: Configuration du navigateur
 
-    Finnish
-en: Finnish
+    Finished
+en: Finished
 fr: Terminer
 
     Home
@@ -200,3 +200,19 @@ fr: Consang
     Update_nldb
 en: Update_nldb
 fr: Update_nldb
+
+    About geneweb group...
+en: About geneweb group...
+fr: À propos du groupe geneweb...
+
+    Make sure your user has been added to the geneweb group
+en: Make sure your user has been added to the geneweb group
+fr: Assurez-vous que votre utilisateur a été ajouté au groupe geneweb
+
+    Geneweb databases are in /var/lib/geneweb
+en: Geneweb databases are in /var/lib/geneweb
+fr: Les bases de données geneweb sont dans /var/lib/geneweb
+
+    Your configuration file is ~/.geneweb-config.txt
+en: Your configuration file is ~/.geneweb-config.txt
+fr: Votre fichier de configuration est ~/.geneweb-config.txt

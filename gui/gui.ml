@@ -14,11 +14,14 @@ type conf =
     waiting_pids : mutable list int }
 ;
 
-value bin_dir =
-  let path = Filename.dirname (Sys.argv.(0)) in
-  if Filename.is_relative path then
-    Filename.concat (Sys.getcwd ()) path
-  else path
+value bin_dir = "/usr/bin";
+value share_dir = "/usr/share/geneweb";
+value assistant_default_bases_dir = "/var/lib/geneweb";
+
+value home_dir =
+  try Sys.getenv "HOME" with
+  [ Not_found ->
+    Sys.getcwd ()]
 ;
 
 value trace = ref False;
@@ -32,12 +35,9 @@ value default_lang =
 
 value lang = ref default_lang;
 value lexicon_mtime = ref 0.0;
-value lexicon_file = Filename.concat bin_dir "gui_lex.txt";
 
-value config_gui_file = Filename.concat bin_dir "config.txt";
-value config_gwd_file = Filename.concat bin_dir "gwd.arg";
-value config_only_file = Filename.concat bin_dir "only.txt";
-
+value lexicon_file = Filename.concat share_dir "lang/gui_lex.txt";
+value config_gui_file = Filename.concat home_dir ".geneweb-config.txt";
 
 (**/**) (* Gestion du dictionnaire des langues pour GUI. *)
 
@@ -217,8 +217,7 @@ value write_base_env conf bname env =
 ;
 
 value write_config_file conf = do {
-  let fname = Filename.concat bin_dir "config.txt" in
-  match try Some (open_out fname) with [ Sys_error _ -> None] with
+  match try Some (open_out config_gui_file) with [ Sys_error _ -> None] with
   [ Some oc ->
       do {
         List.iter (fun (k, v) -> fprintf oc "%s=%s\n" k v) conf.gui_arg;
@@ -256,7 +255,7 @@ value config_browser () =
     [ "Win32" | "Cygwin" ->
         ["C:\\Program Files\\Mozilla Firefox\\firefox.exe";
          "C:\\Program Files\\Internet Explorer\\iexplore.exe"]
-    | _ -> ["/usr/bin/firefox"; "/usr/bin/mozilla"] ]
+    | _ -> ["/usr/bin/firefox"; "/usr/bin/iceweasel"; "/usr/bin/konqueror"; "/usr/bin/chromium"] ]
   in
   match List.filter Sys.file_exists default_browsers with
   [ [] -> None
@@ -753,7 +752,7 @@ value rec show_main conf = do {
   in
   let icon name =
     let file =
-      List.fold_left Filename.concat bin_dir ["images"; name]
+      List.fold_left Filename.concat share_dir ["images"; name]
     in
     let info = GDraw.pixmap_from_xpm ~file:file () in
     (GMisc.pixmap info ())#coerce
@@ -1249,7 +1248,7 @@ and launch_server conf = do {
   try Sys.remove stop_server with [ Sys_error _ -> () ];
   let prog = Filename.concat bin_dir "gwd" in
   let args =
-    ["-hd"; bin_dir; "-bd"; conf.bases_dir; "-p"; sprintf "%d" conf.port]
+    ["-hd"; share_dir; "-bd"; conf.bases_dir; "-lang"; lang.val; "-p"; sprintf "%d" conf.port]
   in
   let server_pid = exec prog args gwd_log gwd_log in
   let (pid, ps) = Unix.waitpid [Unix.WNOHANG] server_pid in
@@ -1286,8 +1285,14 @@ value launch_config () =
     let page_0 = GMisc.label
       ~text:(transl "This assistant will help you to setup GeneWeb") ()
     in
-    let bases_dir = ref "" in
-    let page_1 = GPack.hbox ~spacing:5 () in
+    let page_0b = GMisc.label
+      ~text:(transl "Make sure your user has been added to the geneweb group") ()
+    in
+    let bases_dir = ref assistant_default_bases_dir in
+    let page_1 = GMisc.label
+      ~text:(transl "Geneweb databases are in /var/lib/geneweb") ()
+    in
+    (*let page_1 = GPack.hbox ~spacing:5 () in
     let _label = GMisc.label
       ~text:(transl "select bases directory")
       ~packing:(page_1#pack ~expand:False ~fill:False ~padding:5) ()
@@ -1307,7 +1312,7 @@ value launch_config () =
            bases_dir.val := select_dir assistant bases_dir.val;
            let num = assistant#current_page in
            let page = assistant#nth_page num in
-           assistant#set_page_complete page (bases_dir.val <> "") }));
+           assistant#set_page_complete page (bases_dir.val <> "") }));*)
     let port = ref 2317 in
     let page_2 = GPack.hbox ~homogeneous:False ~spacing:5 () in
     let _label = GMisc.label
@@ -1363,7 +1368,7 @@ value launch_config () =
                assistant#set_page_complete page btn#active }))
     | None -> () ];
     let page_4 = GMisc.label
-      ~text:(transl "save preferences") ()
+      ~text:(transl "Your configuration file is ~/.geneweb-config.txt") ()
     in
     ignore
       (assistant#append_page
@@ -1373,8 +1378,15 @@ value launch_config () =
          page_0#as_widget);
     ignore
       (assistant#append_page
+         ~title:(transl "About geneweb group...")
+         ~page_type:`CONTENT
+         ~complete:True
+         page_0b#as_widget);
+    ignore
+      (assistant#append_page
          ~title:(transl "Setup bases directory")
          ~page_type:`CONTENT
+         ~complete:True
          page_1#as_widget);
     ignore
       (assistant#append_page
@@ -1389,7 +1401,7 @@ value launch_config () =
          page_3#as_widget);
     ignore
       (assistant#append_page
-         ~title:(transl "Finnish")
+         ~title:(transl "Finished")
          ~page_type: `CONFIRM
          ~complete:True
          page_4#as_widget);
@@ -1425,6 +1437,7 @@ value usage_msg = "Usage: gui [option]";
 
 value main () = do {
   Arg.parse (Arg.align speclist) anon_fun usage_msg;
+  ignore(Unix.umask 0o002); (* to allow other users to modify files in /var/lib/geneweb (requires adding user to geneweb user group) *)
   launch_config ();
   let () = GMain.main () in
   Sys.catch_break True;
