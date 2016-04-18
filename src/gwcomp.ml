@@ -715,7 +715,7 @@ value set_infos fn sn occ sex comm_psources comm_birth_place str u l =
     [ (None, _) | (_, Some _) | (Some None, _) ->
         match mort with
         [ Some m -> m
-        | None -> DontKnowIfDead ]
+        | None -> NotDead ]
     | (Some _, None) -> NotDead ]
   in
   let naissance =
