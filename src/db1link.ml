@@ -542,6 +542,11 @@ value fevent_name_unique_string gen =
 value update_family_with_fevents gen fam =
   let found_marriage = ref False in
   let found_divorce = ref False in
+  let nsck_std_fields =
+    match fam.relation with
+    [ NoSexesCheckNotMarried | NoSexesCheckMarried -> True
+    | _ -> False ]
+  in
   (* On veut cette fois ci que ce soit le dernier évènement *)
   (* qui soit mis dans les évènements principaux.           *)
   loop (List.rev fam.fevents) fam where rec loop fevents fam =
@@ -554,7 +559,7 @@ value update_family_with_fevents gen fam =
             else
               let witnesses = Array.map fst evt.efam_witnesses in
               let fam =
-                {(fam) with relation = Engaged;
+                {(fam) with relation = if nsck_std_fields then NoSexesCheckNotMarried else Engaged;
                   marriage = evt.efam_date;
                   marriage_place = evt.efam_place;
                   marriage_note = evt.efam_note;
@@ -566,7 +571,7 @@ value update_family_with_fevents gen fam =
         | Efam_Marriage ->
               let witnesses = Array.map fst evt.efam_witnesses in
               let fam =
-                {(fam) with relation = Married;
+                {(fam) with relation = if nsck_std_fields then NoSexesCheckMarried else Married;
                   marriage = evt.efam_date;
                   marriage_place = evt.efam_place;
                 marriage_note = evt.efam_note;
@@ -592,7 +597,7 @@ value update_family_with_fevents gen fam =
               (* mariage, on ne met pas de lieu.            *)
               let place = unique_string gen "" in
               let fam =
-                {(fam) with relation = Married;
+                {(fam) with relation = if nsck_std_fields then NoSexesCheckMarried else Married;
                   marriage = date;
                   marriage_place = place;
                   marriage_note = evt.efam_note;
@@ -607,7 +612,7 @@ value update_family_with_fevents gen fam =
             else
               let witnesses = Array.map fst evt.efam_witnesses in
               let fam =
-                {(fam) with relation = NoMention;
+                {(fam) with relation = if nsck_std_fields then NoSexesCheckNotMarried else NoMention;
                   marriage = evt.efam_date;
                   marriage_place = evt.efam_place;
                   marriage_note = evt.efam_note;
@@ -621,7 +626,7 @@ value update_family_with_fevents gen fam =
             else
               let witnesses = Array.map fst evt.efam_witnesses in
               let fam =
-                {(fam) with relation = NotMarried;
+                {(fam) with relation = if nsck_std_fields then NoSexesCheckNotMarried else NotMarried;
                   marriage = evt.efam_date;
                   marriage_place = evt.efam_place;
                   marriage_note = evt.efam_note;
