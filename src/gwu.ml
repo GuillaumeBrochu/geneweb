@@ -9,6 +9,7 @@ open Printf;
 
 (* Backward compatibility option before the additional fields. *)
 value old_gw = ref False;
+value old_gwplus = ref False;
 
 value put_events_in_notes base p =
   (* Si on est en mode old_gw, on mets tous les évènements *)
@@ -349,6 +350,7 @@ value print_title oc base t =
 ;
 
 value print_infos oc base is_child csrc cbp p =
+  let use_std_fields = old_gw.val || old_gwplus.val in
   do {
     List.iter (print_first_name_alias oc base) (get_first_names_aliases p);
     List.iter (print_surname_alias oc base) (get_surnames_aliases p);
@@ -368,6 +370,7 @@ value print_infos oc base is_child csrc cbp p =
     | Private -> fprintf oc " #apriv" ];
     print_if_no_empty oc base "#occu" (get_occupation p);
     print_if_not_equal_to csrc oc base "#src" (get_psources p);
+    if use_std_fields then do {  (* TO REMOVE REDUNDANCY IN .gw FILES *)
     match Adef.od_of_codate (get_birth p) with
     [ Some d -> do { fprintf oc " "; print_date oc d }
     | _ ->
@@ -389,9 +392,11 @@ value print_infos oc base is_child csrc cbp p =
     | _ -> () ];
     print_if_no_empty oc base "#pp" (get_baptism_place p);
     print_if_no_empty oc base "#ps" (get_baptism_src p);
+    () } else fprintf oc " 0"; (* TO REMOVE REDUNDANCY IN .gw FILES *)
     match get_death p with
     [ Death dr d ->
         do {
+          if use_std_fields then do {(* TO REMOVE REDUNDANCY IN .gw FILES *)
           fprintf oc " ";
           match dr with
           [ Killed -> fprintf oc "k"
@@ -400,6 +405,13 @@ value print_infos oc base is_child csrc cbp p =
           | Disappeared -> fprintf oc "s"
           | _ -> () ];
           print_date oc (Adef.date_of_cdate d)
+          } else (* TO REMOVE REDUNDANCY IN .gw FILES *)
+          match dr with
+          [ Killed -> fprintf oc " k0(d.r.)"
+          | Murdered -> fprintf oc " m0(d.r.)"
+          | Executed -> fprintf oc " e0(d.r.)"
+          | Disappeared -> fprintf oc " s0(d.r.)"
+          | _ -> () ]
         }
     | DeadYoung -> fprintf oc " mj"
     | DeadDontKnowWhen -> fprintf oc " 0"
@@ -411,11 +423,13 @@ value print_infos oc base is_child csrc cbp p =
         | _ -> () ]
     | OfCourseDead -> fprintf oc " od"
     | NotDead -> () ];
+    if use_std_fields then do { (* TO REMOVE REDUNDANCY IN .gw FILES *)
     print_if_no_empty oc base "#dp" (get_death_place p);
     print_if_no_empty oc base "#ds" (get_death_src p);
     print_burial oc base (get_burial p);
     print_if_no_empty oc base "#rp" (get_burial_place p);
     print_if_no_empty oc base "#rs" (get_burial_src p)
+    } else () (* TO REMOVE REDUNDANCY IN .gw FILES *)
   }
 ;
 
@@ -864,11 +878,14 @@ value has_infos_isolated base p =
 
 value print_family oc base gen m =
   let fam = m.m_fam in
+  let use_std_fields = old_gw.val || old_gwplus.val in
   do {
     fprintf oc "fam ";
     print_parent oc base gen fam m.m_fath;
     fprintf oc " +";
+    if use_std_fields then do { (* TO REMOVE REDUNDANCY IN .gw FILES *)
     print_date_option oc (Adef.od_of_codate (get_marriage fam));
+    () } else (); (* TO REMOVE REDUNDANCY IN .gw FILES *)
     match get_relation fam with
     [ NotMarried -> fprintf oc " #nm"
     | Married -> ()
@@ -890,6 +907,7 @@ value print_family oc base gen m =
         in
         fprintf oc " #nsckm %c%c" (c m.m_fath) (c m.m_moth)
     | NoMention -> fprintf oc " #noment" ];
+    if use_std_fields then do { (* TO REMOVE REDUNDANCY IN .gw FILES *)
     print_if_no_empty oc base "#mp" (get_marriage_place fam);
     print_if_no_empty oc base "#ms" (get_marriage_src fam);
     match get_divorce fam with
@@ -898,9 +916,11 @@ value print_family oc base gen m =
     | Divorced d ->
         let d = Adef.od_of_codate d in
         do { fprintf oc " -"; print_date_option oc d } ];
+    () } else (); (* TO REMOVE REDUNDANCY IN .gw FILES *)
     fprintf oc " ";
     print_parent oc base gen fam m.m_moth;
     fprintf oc "\n";
+    if use_std_fields then do { (* TO REMOVE REDUNDANCY IN .gw FILES *)
     Array.iter
       (fun ip ->
          if gen.per_sel ip then do {
@@ -916,6 +936,7 @@ value print_family oc base gen m =
          }
          else ())
       (get_witnesses fam);
+    () } else (); (* TO REMOVE REDUNDANCY IN .gw FILES *)
     let fsources = sou base (get_fsources fam) in
     match fsources with
     [ "" -> ()
@@ -926,9 +947,11 @@ value print_family oc base gen m =
       | _ -> "" ]
     in
     let cbp =
+    if use_std_fields then (* TO REMOVE REDUNDANCY IN .gw FILES *)
       match common_children_birth_place base m.m_chil with
       [ Some s -> do { fprintf oc "cbp %s\n" (s_correct_string s); s }
       | _ -> "" ]
+    else "" (* TO REMOVE REDUNDANCY IN .gw FILES *)
     in
     print_comment_for_family oc base gen fam;
     if not old_gw.val && (get_fevents fam) <> [] then do {
@@ -1989,6 +2012,7 @@ value speclist =
      it is Public. All the spouses and descendants are also censored.");
    ("-old_gw", Arg.Set old_gw, ": Do not export additional fields \
 (for backward compatibility: < 7.00)");
+   ("-old_gwplus", Arg.Set old_gwplus, ": Export info both in families and events");
    ("-raw", Arg.Set raw_output,
     "raw output (without possible utf-8 conversion)");
    ("-v", Arg.Set Mutil.verbose, "verbose");
