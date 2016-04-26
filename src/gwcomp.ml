@@ -711,12 +711,9 @@ value set_infos fn sn occ sex comm_psources comm_birth_place str u l =
   let (death_note, l) = get_field "#dn" l in
   let (death_src, l) = get_field "#ds" l in
   let mort =
-    match (naissance, mort) with
-    [ (None, _) | (_, Some _) | (Some None, _) ->
-        match mort with
-        [ Some m -> m
-        | None -> DontKnowIfDead ]
-    | (Some _, None) -> NotDead ]
+    match mort with
+      [ Some m -> m
+      | None -> NotDead ]
   in
   let naissance =
     match naissance with
