@@ -290,7 +290,7 @@ value load_person_history conf fname = do {
             let v : gen_record = input_value ic in
             history.val := [v :: history.val]
           }
-        with [ End_of_file -> () ];
+        with [ _ -> () ];
         close_in ic
       }
   | None -> () ];
