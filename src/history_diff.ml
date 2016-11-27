@@ -450,9 +450,26 @@ value string_of_codate conf cod =
 ;
 
 value string_of_death conf death =
+  let is = 0 in
   match death with
-  [ Death _ cd -> Date.string_slash_of_date conf (Adef.date_of_cdate cd)
-  | _ -> "" ]
+  [ Death dr cd ->
+    let dd_str =
+      Date.string_slash_of_date conf (Adef.date_of_cdate cd)
+    in
+    let dr_str =
+      match dr with
+        [ Killed -> transl_nth conf "killed (in action)" is
+        | Murdered -> transl_nth conf "murdered" is
+        | Executed -> transl_nth conf "executed (legally killed)" is
+        | Disappeared -> transl_nth conf "disappeared" is
+        | Unspecified -> transl_nth conf "unspecified" is ]
+    in
+    String.concat ", " [dd_str ; dr_str]
+  | NotDead -> transl_nth conf "alive" is
+  | DeadYoung -> transl_nth conf "died young" is
+  | DeadDontKnowWhen -> transl_nth conf "died" is
+  | DontKnowIfDead -> ""
+  | OfCourseDead -> transl_nth conf "of course dead" is]
 ;
 
 value string_of_burial conf burial =
