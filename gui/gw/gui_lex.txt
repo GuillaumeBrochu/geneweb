@@ -145,8 +145,8 @@ fr: Configuration du port
 en: Setup browser
 fr: Configuration du navigateur
 
-    Finnish
-en: Finnish
+    Finished
+en: Finished
 fr: Terminer
 
     Home
@@ -200,3 +200,7 @@ fr: Consang
     Update_nldb
 en: Update_nldb
 fr: Update_nldb
+
+    Your configuration file is:
+en: Your configuration file is:
+fr: Votre fichier de configuration est:

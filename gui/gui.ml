@@ -1366,7 +1366,8 @@ value launch_config () =
                assistant#set_page_complete page btn#active }))
     | None -> () ];
     let page_4 = GMisc.label
-      ~text:(transl "save preferences") ()
+      ~text:(transl "Your configuration file is:" ^ "\n" ^ config_gui_file)
+      ~line_wrap:True ()
     in
     ignore
       (assistant#append_page
@@ -1392,7 +1393,7 @@ value launch_config () =
          page_3#as_widget);
     ignore
       (assistant#append_page
-         ~title:(transl "Finnish")
+         ~title:(transl "Finished")
          ~page_type: `CONFIRM
          ~complete:True
          page_4#as_widget);
