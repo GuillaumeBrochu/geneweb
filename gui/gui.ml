@@ -21,6 +21,8 @@ value bin_dir =
   else path
 ;
 
+value share_dir = bin_dir;
+
 value trace = ref False;
 
 value default_lang =
@@ -35,9 +37,6 @@ value lexicon_mtime = ref 0.0;
 value lexicon_file = Filename.concat bin_dir "gui_lex.txt";
 
 value config_gui_file = Filename.concat bin_dir "config.txt";
-value config_gwd_file = Filename.concat bin_dir "gwd.arg";
-value config_only_file = Filename.concat bin_dir "only.txt";
-
 
 (**/**) (* Gestion du dictionnaire des langues pour GUI. *)
 
@@ -217,8 +216,7 @@ value write_base_env conf bname env =
 ;
 
 value write_config_file conf = do {
-  let fname = Filename.concat bin_dir "config.txt" in
-  match try Some (open_out fname) with [ Sys_error _ -> None] with
+  match try Some (open_out config_gui_file) with [ Sys_error _ -> None] with
   [ Some oc ->
       do {
         List.iter (fun (k, v) -> fprintf oc "%s=%s\n" k v) conf.gui_arg;
@@ -285,19 +283,24 @@ value close_server conf =
       clean_waiting_pids conf;
       eprintf "Closing..."; flush stderr;
       (* Making a (empty) file STOP_SERVER to make the server stop. *)
-      let stop_server =
-        List.fold_left Filename.concat conf.bases_dir ["cnt"; "STOP_SERVER"]
-      in
-      let oc = open_out stop_server in
-      close_out oc;
-      (* Send a phony connection to unblock it. *)
-      let s = Unix.socket Unix.PF_INET Unix.SOCK_STREAM 0 in
-      try
-        Unix.connect s (Unix.ADDR_INET Unix.inet_addr_loopback conf.port)
-      with [ Unix.Unix_error _ _ _ -> () ];
-      try Unix.close s with
-      [ Unix.Unix_error _ _ _ -> () ];
-      ignore (Unix.waitpid [] server_pid);
+      let (pid, ps) = Unix.waitpid [Unix.WNOHANG] server_pid in
+      if pid=0 then
+        let stop_server =
+          List.fold_left Filename.concat conf.bases_dir ["cnt"; "STOP_SERVER"]
+        in
+        do {
+          let oc = open_out stop_server in
+          close_out oc;
+          (* Send a phony connection to unblock it. *)
+          let s = Unix.socket Unix.PF_INET Unix.SOCK_STREAM 0 in
+          try
+            Unix.connect s (Unix.ADDR_INET Unix.inet_addr_loopback conf.port)
+          with [ Unix.Unix_error _ _ _ -> () ];
+          try Unix.close s with
+            [ Unix.Unix_error _ _ _ -> () ];
+          ignore (Unix.waitpid [] server_pid);
+          try Sys.remove stop_server with [ Sys_error _ -> () ]
+      } else ();
       conf.server_running := None;
       eprintf "\n"; flush stderr;
     }
@@ -753,7 +756,7 @@ value rec show_main conf = do {
   in
   let icon name =
     let file =
-      List.fold_left Filename.concat bin_dir ["images"; name]
+      List.fold_left Filename.concat share_dir ["images"; name]
     in
     let info = GDraw.pixmap_from_xpm ~file:file () in
     (GMisc.pixmap info ())#coerce
@@ -1249,7 +1252,7 @@ and launch_server conf = do {
   try Sys.remove stop_server with [ Sys_error _ -> () ];
   let prog = Filename.concat bin_dir "gwd" in
   let args =
-    ["-hd"; bin_dir; "-bd"; conf.bases_dir; "-p"; sprintf "%d" conf.port]
+    ["-hd"; share_dir; "-bd"; conf.bases_dir; "-lang"; lang.val; "-p"; sprintf "%d" conf.port]
   in
   let server_pid = exec prog args gwd_log gwd_log in
   let (pid, ps) = Unix.waitpid [Unix.WNOHANG] server_pid in
@@ -1363,7 +1366,8 @@ value launch_config () =
                assistant#set_page_complete page btn#active }))
     | None -> () ];
     let page_4 = GMisc.label
-      ~text:(transl "save preferences") ()
+      ~text:(transl "Your configuration file is:" ^ "\n" ^ config_gui_file)
+      ~line_wrap:True ()
     in
     ignore
       (assistant#append_page
@@ -1389,7 +1393,7 @@ value launch_config () =
          page_3#as_widget);
     ignore
       (assistant#append_page
-         ~title:(transl "Finnish")
+         ~title:(transl "Completed!")
          ~page_type: `CONFIRM
          ~complete:True
          page_4#as_widget);
