@@ -105,6 +105,9 @@ opt out:
 
 depend: $(DEPEND_DEPEND)
 	$(ROOT)/tools/camlp5_depend.sh $(CAMLP5F) $(OCAMLI) -- $(wildcard *.ml *.mli) > .depend
+	  echo '# This is a patch'
+	  mv .depend .depend.bak
+	  sed -e 's/\/\x0D/\\/g' .depend.bak >.depend
 
 .depend:
 	@if [ ! -e $@ ]; then $(MAKE) -o $@ depend; fi
