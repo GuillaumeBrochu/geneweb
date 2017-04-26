@@ -266,8 +266,8 @@ history=no
 # Warning: this directory grows indefinitively...
 history_diff=no
 
-# You can define a specific path where to store all the histories. If you
-# don't specify it, it will save the history in your database directory
+# You can define a specific path where to store the history of this base. If
+# you don't specify it, it will save the history in your database directory
 # (which is juste fine).
 history_path=
 
