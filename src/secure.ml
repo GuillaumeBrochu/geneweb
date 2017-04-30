@@ -12,9 +12,11 @@ value base_dir_r = ref Filename.current_dir_name;
 value decompose =
   loop [] where rec loop r s =
     let b = Filename.basename s in
-    if b = "" || b = Filename.current_dir_name then
+    let cdn = Filename.current_dir_name in
+    let ds = Filename.dir_sep in
+    if b = "" || b = cdn || b = ds then
       let d = Filename.dirname s in
-      if d = "" || d = Filename.current_dir_name then r
+      if d = "" || d = cdn || d = ds then r
       else if d = s then [d :: r]
       else loop r d
     else if b = s then [b :: r]
