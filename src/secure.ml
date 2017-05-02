@@ -32,7 +32,9 @@ value add_lang_path = add_path lang_path_r;
 value set_base_dir s =
   do {
     base_dir_r.val := s;
+    Printf.eprintf "***** AVANT\n"; flush stderr;
     ok_path.val := [decompose s :: ok_path.val]
+    ;Printf.eprintf "***** APRÈS\n"; flush stderr
   }
 ;
 value lang_path () = lang_path_r.val;
