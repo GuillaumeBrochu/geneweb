@@ -40,13 +40,11 @@ install:
 		mkdir -p $(PREFIX)/bin; \
 		cp src/gwc1 $(PREFIX)/bin/gwc$(EXE); \
 		cp src/gwc1 $(PREFIX)/bin/gwc1$(EXE); \
-		cp src/gwc2 $(PREFIX)/bin/gwc2$(EXE); \
 		cp src/mk_consang $(PREFIX)/bin/mk_consang$(EXE); \
 		cp src/mk_consang $(PREFIX)/bin/consang$(EXE); \
 		cp src/gwd $(PREFIX)/bin/gwd$(EXE); \
 		cp src/gwu $(PREFIX)/bin/gwu$(EXE); \
 		cp ged2gwb/ged2gwb $(PREFIX)/bin/ged2gwb$(EXE); \
-		cp ged2gwb/ged2gwb2 $(PREFIX)/bin/ged2gwb2$(EXE); \
 		cp gwb2ged/gwb2ged $(PREFIX)/bin/gwb2ged$(EXE); \
 		cp setup/setup $(PREFIX)/bin/gwsetup$(EXE); \
 		cp src/update_nldb $(PREFIX)/bin/update_nldb$(EXE); \
@@ -59,7 +57,6 @@ install:
 uninstall:
 	$(RM) $(PREFIX)/bin/gwc$(EXE)
 	$(RM) $(PREFIX)/bin/gwc1$(EXE)
-	$(RM) $(PREFIX)/bin/gwc2$(EXE)
 	$(RM) $(PREFIX)/bin/mk_consang$(EXE)
 	$(RM) $(PREFIX)/bin/consang$(EXE)
 	$(RM) $(PREFIX)/bin/gwd$(EXE)
@@ -100,14 +97,12 @@ distrib:
 	echo "-setup_link" > $(DESTDIR)/gw/gwd.arg
 	cp src/gwc1 $(DESTDIR)/gw/gwc$(EXE)
 	cp src/gwc1 $(DESTDIR)/gw/gwc1$(EXE)
-	cp src/gwc2 $(DESTDIR)/gw/gwc2$(EXE)
 	cp src/mk_consang $(DESTDIR)/gw/mk_consang$(EXE)
 	cp src/mk_consang $(DESTDIR)/gw/consang$(EXE)
 	cp src/gwd $(DESTDIR)/gw/gwd$(EXE)
 	cp src/gwu $(DESTDIR)/gw/gwu$(EXE)
 	cp src/update_nldb $(DESTDIR)/gw/update_nldb$(EXE)
 	cp ged2gwb/ged2gwb $(DESTDIR)/gw/ged2gwb$(EXE)
-	cp ged2gwb/ged2gwb2 $(DESTDIR)/gw/ged2gwb2$(EXE)
 	cp gwb2ged/gwb2ged $(DESTDIR)/gw/gwb2ged$(EXE)
 	cp setup/setup $(DESTDIR)/gw/gwsetup$(EXE)
 	mkdir $(DESTDIR)/gw/gwtp_tmp
