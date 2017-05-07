@@ -562,13 +562,13 @@ value print_default_gwf_file conf bname =
 value create_base conf bname src_file =
   if bname = "" then ()
   else do {
-    if src_file = "" then gwc2 conf bname src_file
+    if src_file = "" then gwc1 conf bname src_file
     else
       let fname = String.lowercase src_file in
       if Filename.check_suffix fname ".gw" then
-        gwc2 conf bname src_file
+        gwc1 conf bname src_file
       else if Filename.check_suffix fname ".ged" then
-        ged2gwb2 conf bname src_file
+        ged2gwb conf bname src_file
       else error_popup (transl "Unknown file");
     let gwf_file = Filename.concat conf.bases_dir (bname ^ ".gwf") in
     if Sys.file_exists gwf_file then ()
@@ -594,7 +594,7 @@ value clean_database conf bname = do {
   gwu conf bname (bname ^ "_save");
   rename_base conf bname (bname ^ "_old");
   let fname = Filename.concat conf.bases_dir (bname ^ "_save.gw") in
-  gwc2 conf bname fname;
+  gwc1 conf bname fname;
   consang conf bname;
   update_nldb conf bname;
 };
