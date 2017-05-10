@@ -494,7 +494,7 @@ value rec hotl conf wlo cnt edit_opt sections_nums list =
         | Some (parag, sl, False) when List.length parag >= 2 ->
             (["</pre>" :: parag @ ["<pre>" :: list]], ["" :: sl])
         | Some (parag, sl, _) ->
-            (["</p>" :: parag @ ["<p>" :: list]], ["" :: sl]) ]
+            (["" :: parag @ list], ["" :: sl]) ]
       in
       hotl conf wlo cnt edit_opt sections_nums list sl
   | [s :: sl] ->
