@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 (* $Id: popule.ml,v 4.31 2007-02-16 10:35:39 deraugla Exp $ *)
 
 open Def;

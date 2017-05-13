@@ -1,4 +1,4 @@
-(* camlp5r ./pa_html.cmo *)
+(* camlp4r ./pa_html.cmo *)
 (* $Id: mergeIndOk.ml,v 5.44 2008-01-21 14:02:36 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

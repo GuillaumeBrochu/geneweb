@@ -1,4 +1,4 @@
-(* camlp5r pa_extend.cmo ../src/pa_lock.cmo *)
+(* camlp4r pa_extend.cmo ../src/pa_lock.cmo *)
 (* $Id: ged2gwb.ml,v 5.53 2007-09-12 09:58:44 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

@@ -1,4 +1,4 @@
-(* camlp5r ./pa_html.cmo *)
+(* camlp4r ./pa_html.cmo *)
 (* $Id: relation.ml,v 5.22 2008-01-12 01:49:50 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

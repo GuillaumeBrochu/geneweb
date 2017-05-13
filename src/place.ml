@@ -1,4 +1,4 @@
-(* camlp5r ./pa_html.cmo *)
+(* camlp4r ./pa_html.cmo *)
 (* $Id: place.ml,v 5.21 2007-09-18 19:12:08 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

@@ -1,4 +1,4 @@
-(* camlp5r ./pa_html.cmo *)
+(* camlp4r ./pa_html.cmo *)
 (* $Id: advSearchOk.ml,v 5.14 2007-09-12 09:58:44 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

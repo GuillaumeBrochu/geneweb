@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 (* $Id: forum.ml,v 5.22 2008-01-07 13:29:47 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

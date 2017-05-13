@@ -1,4 +1,4 @@
-(* camlp5r ./pa_html.cmo *)
+(* camlp4r ./pa_html.cmo *)
 (* $Id: templ.ml,v 5.36 2007-09-12 09:58:44 ddr Exp $ *)
 
 open Config;

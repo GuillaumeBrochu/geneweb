@@ -1,4 +1,4 @@
-(* nocamlp5 *)
+(* nocamlp4 *)
 
 module rec Api_link_tree_piqi:
   sig

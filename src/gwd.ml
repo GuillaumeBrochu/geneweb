@@ -1,4 +1,4 @@
-(* camlp5r pa_extend.cmo ./pa_html.cmo ./pa_lock.cmo *)
+(* camlp4r pa_extend.cmo ./pa_html.cmo ./pa_lock.cmo *)
 (* $Id: gwd.ml,v 5.61 2009-03-11 10:56:09 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

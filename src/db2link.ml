@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 (* $Id: db2link.ml,v 5.18 2012-01-27 08:53:53 ddr Exp $ *)
 (* Copyright (c) 2006-2008 INRIA *)
 

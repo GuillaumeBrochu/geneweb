@@ -1,4 +1,4 @@
-(* camlp5r ./pa_html.cmo *)
+(* camlp4r ./pa_html.cmo *)
 (* $Id: history_diff.ml,v 0.01 2012-12-20 14:34:44 flh Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

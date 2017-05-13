@@ -1,4 +1,4 @@
-(* camlp5r ../../src/pa_lock.cmo *)
+(* camlp4r ../../src/pa_lock.cmo *)
 (* $Id: gwFixY.ml,v 0.01 2015-04-29 09:48:20 flh Exp $ *)
 
 open Def;

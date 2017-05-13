@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 (* $Id: probot.ml,v 1.7 2006-10-05 13:37:58 deraugla Exp $ *)
 
 open Printf;

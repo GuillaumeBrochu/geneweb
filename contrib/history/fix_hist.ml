@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 (* $Id: convert.ml,v 1.00 2013/09/05 10:09:42 flh Exp $ *)
 
 open Def;

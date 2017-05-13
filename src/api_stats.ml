@@ -1,4 +1,4 @@
-(* nocamlp5 *)
+(* nocamlp4 *)
 
 
 module Mstats = Api_stats_piqi

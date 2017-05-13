@@ -1,4 +1,4 @@
-(* nocamlp5 *)
+(* nocamlp4 *)
 
 module rec Api_saisie_write_piqi:
   sig

@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 (* $Id: public2.ml,v 4.1 2008-03-31 11:34:34 deraugla Exp $ *)
 
 open Printf;

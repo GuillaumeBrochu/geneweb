@@ -1,4 +1,4 @@
-(* nocamlp5 *)
+(* nocamlp4 *)
 
 let piqi = Api_saisie_write_piqi.piqi
 

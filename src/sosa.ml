@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 (* Copyright (c) 1998-2007 INRIA *)
 
 type t = array int;

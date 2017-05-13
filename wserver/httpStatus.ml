@@ -1,4 +1,4 @@
-(* camlp5o *)
+(* camlp4o *)
 
 type t =
 | OK (* 200 *)

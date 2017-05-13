@@ -1,4 +1,4 @@
-(* nocamlp5 *)
+(* nocamlp4 *)
 (*pp camlp4o -I `ocamlfind query piqi.syntax` pa_labelscope.cmo pa_openin.cmo *)
 
 open Def

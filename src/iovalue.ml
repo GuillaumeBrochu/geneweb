@@ -1,4 +1,4 @@
-(* camlp5r ./q_codes.cmo *)
+(* camlp4r ./q_codes.cmo *)
 (* $Id: iovalue.ml,v 5.15 2012-01-27 16:27:46 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

@@ -1,4 +1,4 @@
-(* nocamlp5 *)
+(* nocamlp4 *)
 
 
 module Mread = Api_saisie_read_piqi

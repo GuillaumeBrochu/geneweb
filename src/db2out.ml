@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 (* $Id: db2out.ml,v 5.28 2012-01-27 17:14:03 ddr Exp $ *)
 (* Copyright (c) 2007 INRIA *)
 

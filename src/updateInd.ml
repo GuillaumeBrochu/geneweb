@@ -1,4 +1,4 @@
-(* camlp5r ./pa_html.cmo *)
+(* camlp4r ./pa_html.cmo *)
 (* $Id: updateInd.ml,v 5.15 2008-01-08 11:58:46 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

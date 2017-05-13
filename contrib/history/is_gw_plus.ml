@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 
 open Def;
 

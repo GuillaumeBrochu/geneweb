@@ -1,4 +1,4 @@
-(* camlp5r ./pa_html.cmo *)
+(* camlp4r ./pa_html.cmo *)
 (* $Id: searchName.ml,v 1.00 2014-07-08 11:26:10 flh Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

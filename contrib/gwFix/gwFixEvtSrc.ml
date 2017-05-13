@@ -1,4 +1,4 @@
-(* camlp5r ../../src/pa_lock.cmo *)
+(* camlp4r ../../src/pa_lock.cmo *)
 (* $Id: gw_fix_burial.ml,v 0.01 2014-02-21 16:26:45 flh Exp $ *)
 
 open Def;

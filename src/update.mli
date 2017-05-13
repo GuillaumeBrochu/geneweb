@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 (* $Id: update.mli,v 5.12 2008-01-08 02:08:00 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

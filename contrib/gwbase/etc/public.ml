@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 (* $Id: public.ml,v 4.26 2007-01-19 09:03:02 deraugla Exp $ *)
 
 open Def;

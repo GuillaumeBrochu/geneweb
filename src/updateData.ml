@@ -1,4 +1,4 @@
-(* camlp5r ./pa_html.cmo *)
+(* camlp4r ./pa_html.cmo *)
 (* $Id: source.ml,v 0.01 2012-07-12 10:19:08 flh Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

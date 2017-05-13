@@ -1,4 +1,4 @@
-(* camlp5r q_MLast.cmo *)
+(* camlp4r q_MLast.cmo *)
 (* $Id: pr_transl.ml,v 5.5 2007-09-12 09:58:44 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

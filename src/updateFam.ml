@@ -1,4 +1,4 @@
-(* camlp5r ./pa_html.cmo *)
+(* camlp4r ./pa_html.cmo *)
 (* $Id: updateFam.ml,v 5.24 2008-01-09 03:34:36 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

@@ -1,4 +1,4 @@
-(* camlp5o *)
+(* camlp4o *)
 
 let file_flags = [Open_wronly; Open_append; Open_creat; Open_text; Open_nonblock]
 let file_mode = 0o644

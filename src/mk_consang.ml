@@ -1,4 +1,4 @@
-(* camlp5r ./pa_lock.cmo *)
+(* camlp4r ./pa_lock.cmo *)
 (* $Id: mk_consang.ml,v 5.56 2012-01-18 21:03:02 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

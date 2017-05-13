@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 (* $Id: utf8.ml,v 0.1 2012-01-17 17:58:44 flh Exp $ *)
 
 (*

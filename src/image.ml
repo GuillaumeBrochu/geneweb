@@ -1,4 +1,4 @@
-(* camlp5r *)
+(* camlp4r *)
 (* $Id: image.ml,v 5.8 2009-03-11 09:22:39 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 

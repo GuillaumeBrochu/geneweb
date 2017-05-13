@@ -1,4 +1,4 @@
-(* camlp5r ../../../src/pa_lock.cmo *)
+(* camlp4r ../../../src/pa_lock.cmo *)
 (* $Id: gwck.ml,v 4.13 2009-03-11 10:58:51 deraugla Exp $ *)
 
 open Def;
