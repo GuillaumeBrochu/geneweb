@@ -12,7 +12,7 @@ install:
   - '%CYG_BASH% "opam64/install.sh"'
   - '%CYG_BASH% "opam init -a mingw https://github.com/fdopen/opam-repository-mingw.git --comp 4.02.3+mingw64c --switch 4.02.3+mingw64c"'
   - '%CYG_BASH% "eval `opam config env`"'
-  - '%CYG_BASH% "opam install -y ocamlfind camlp5 depext depext-cygwinports"'
+  - '%CYG_BASH% "opam install -y ocamlfind camlp4 depext depext-cygwinports"'
   - 'set PATH=%PATH%;/usr/x86_64-w64-mingw32/sys-root/mingw/bin'
   - '%CYG_BASH% "opam depext -i lablgtk"'
 

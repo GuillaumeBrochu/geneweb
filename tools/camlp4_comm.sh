@@ -16,15 +16,15 @@ head -1 $FILE >/dev/null || exit 1
 
 set - $(head -1 $FILE)
 case "$2" in
-nocamlp5)
+nocamlp4)
   COMMAND="(echo '# 1 \"$FILE\"'; cat $FILE) > $OUTPUT";;
-camlp5|camlp5r|camlp5o)
+camlp4|camlp4r|camlp4o)
   COMMAND="$2"
   shift; shift
   MORE_ARGS=$(echo $* | sed -e "s/[()*]//g")
   COMMAND="$COMMAND $MORE_ARGS $ARGS $FILE";;
 *)
-  COMMAND="camlp5r $ARGS $FILE";;
+  COMMAND="camlp4r $ARGS $FILE";;
 esac
 
 echo "$COMMAND" 1>&2

@@ -36,7 +36,7 @@ MANDIR=$(PREFIX)/man/man1
 DESTDIR=distribution
 MANPAGES=ged2gwb.1 gwb2ged.1 gwc.1 gwc2.1 gwu.1 gwd.1 consang.1 gwsetup.1
 
-CAMLP5_COMM=$(ROOT)/tools/camlp5_comm.sh
+CAMLP4_COMM=$(ROOT)/tools/camlp4_comm.sh
 TEST_DIR=[ "$(abspath $<)" = "$(abspath ./$(notdir $<))" ] || { printf "$(RED)Cannot build target '$@'"; printf "Please run 'make' in directory '$(dir $<)' first$(CLEAR)"; exit 1; }
 extension=$(subst .,,$(suffix $1))
 EXT=$(call extension,$@)
@@ -104,7 +104,7 @@ opt out:
 	$(OCAML_out_LINK) $(OCAMLI) $(LIBS:=$(LIB_out_EXT)) $(LINKFLAGS) $^ -o $@
 
 depend: $(DEPEND_DEPEND)
-	$(ROOT)/tools/camlp5_depend.sh $(CAMLP5F) $(OCAMLI) -- $(wildcard *.ml *.mli) > .depend
+	$(ROOT)/tools/camlp4_depend.sh $(CAMLP4F) $(OCAMLI) -- $(wildcard *.ml *.mli) > .depend
 
 .depend:
 	@if [ ! -e $@ ]; then $(MAKE) -o $@ depend; fi
@@ -140,17 +140,17 @@ clean-tmp:
 
 %.ppi: %.mli
 	@$(TEST_DIR)
-	@$(CAMLP5_COMM) $(CAMLP5F) $< -o $@
+	@$(CAMLP4_COMM) $(CAMLP4F) $< -o $@
 
 %.cmi: %.ppi
-	$(OCAMLC) $(OCAMLI) -I $(CAMLP5D) -c -intf $<
+	$(OCAMLC) $(OCAMLI) -I $(CAMLP4D) -c -intf $<
 
 %.ppo: %.ml
 	@$(TEST_DIR)
-	@$(CAMLP5_COMM) $(CAMLP5F) $< -o $@
+	@$(CAMLP4_COMM) $(CAMLP4F) $< -o $@
 
 %.cmo: %.ppo
-	$(OCAMLC) $(OCAMLI) -I $(CAMLP5D) -c -impl $<
+	$(OCAMLC) $(OCAMLI) -I $(CAMLP4D) -c -impl $<
 
 %.cmx: %.ppo
-	$(OCAMLOPT) $(OCAMLI) -I $(CAMLP5D) -c -impl $<
+	$(OCAMLOPT) $(OCAMLI) -I $(CAMLP4D) -c -impl $<

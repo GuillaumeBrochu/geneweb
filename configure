@@ -34,8 +34,8 @@ OCAMLOPT=
 OCAMLFLAGS="-safe-string"
 NATIVE=false
 
-CAMLP5F=
-CAMLP5D=
+CAMLP4F=
+CAMLP4D=
 CURL=
 PIQI=
 YOJSON=
@@ -166,14 +166,14 @@ check_os() {
   OS_TYPE=`uname -s`
   if [[ $OS_TYPE == "Darwin" ]] || [[ $OS_TYPE == "Linux" ]] ; then
     print_check_ok "Checking OS type" "UNIX"
-    CAMLP5F+=" -D UNIX"
+    CAMLP4F+=" -D UNIX"
     EXE=
     RM="/bin/rm -f"
     STRIP=strip
   else
     print_check_ok "Checking OS type" "WINDOWS"
     OS_TYPE="Win"
-    CAMLP5F+=" -D WINDOWS"
+    CAMLP4F+=" -D WINDOWS"
     EXE=".exe"
     RM="rm -f"
     STRIP=true
@@ -272,13 +272,13 @@ check_ocaml_version() {
   fi
 }
 
-check_camlp5() {
-  if camlp5 -v >/dev/null 2>&1; then
-    print_check_ok "Checking Camlp5"
-    CAMLP5D=`camlp5 -where`
+check_camlp4() {
+  if camlp4 -v >/dev/null 2>&1; then
+    print_check_ok "Checking Camlp4"
+    CAMLP4D=`camlp4 -where`
   else
-    print_check_err "Checking Camlp5" \
-        "You need the command camlp5 accessible in the path!"
+    print_check_err "Checking Camlp4" \
+        "You need the command camlp4 accessible in the path!"
   fi
 }
 
@@ -299,7 +299,7 @@ check_ocamlfind() {
 
 check_api() {
   if $API; then
-    CAMLP5F+=" -DAPI"
+    CAMLP4F+=" -DAPI"
     PACKAGES+=" curl piqirun.ext re uuidm yojson redis"
   fi
 }
@@ -413,7 +413,7 @@ check_environment() {
   check_ocaml
   check_optimized_ocaml
   check_ocaml_version
-  check_camlp5
+  check_camlp4
   check_lablgtk2
   check_api
   check_flags
@@ -447,7 +447,7 @@ print_compiler() {
    echo "OCAMLFLAGS=${OCAMLFLAGS}"
    echo "OCAMLC_PATH=${OCAMLC}"
    echo "OCAMLOPT_PATH=${OCAMLOPT}"
-   echo "CAMLP5F=${CAMLP5F}"
+   echo "CAMLP4F=${CAMLP4F}"
    echo "LINKSTATIC_opt=${LINKSTATIC_opt}"
    echo "LINKSTATIC_out=${LINKSTATIC_out}"
    if $NATIVE; then
@@ -455,7 +455,7 @@ print_compiler() {
    fi
    echo
    echo "# Compiler dependencies."
-   echo "CAMLP5D=${CAMLP5D}"
+   echo "CAMLP4D=${CAMLP4D}"
    echo "LABLGTK2D=${LABLGTK2D}"
    if $API; then
      echo "OCURL=${CURL}"

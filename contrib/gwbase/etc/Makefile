@@ -7,7 +7,7 @@ TOFIX_EXE := cleopatre popule modif
 LIBS = unix
 
 probot.opt probot.out: LIBS += str gramlib
-probot.opt probot.out: LINKFLAGS += -I $(CAMLP5D)
+probot.opt probot.out: LINKFLAGS += -I $(CAMLP4D)
 probot_PREPEND_OBJS := $(ROOT)/src/gwlib
 
 include $(ROOT)/tools/Makefile.common

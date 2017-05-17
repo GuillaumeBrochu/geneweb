@@ -1,6 +1,6 @@
 #!/bin/sh
 #cd (*
-exec ocaml -I +camlp5 camlp5r.cma $0
+exec ocaml -I +camlp4 camlp4r.cma $0
 *) ".";
 (* $Id: mk_missing_i18n.sh,v 5.4 2007-07-28 10:13:42 ddr Exp $ *)
 
