@@ -2,7 +2,7 @@
 (* $Id: pa_html.ml,v 5.5 2007-09-12 09:58:44 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 
-open Pcaml;
+open Camlp4.PreCast;
 
 value rec unfold_apply list =
   fun
@@ -10,7 +10,7 @@ value rec unfold_apply list =
   | e -> (e, list) ]
 ;
 
-value tag_encloser loc tag newl enewl a el =
+value tag_encloser _loc tag newl enewl a el =
   let s = if newl then "\\n" else "" in
   let se = if newl || enewl then "\\n" else "" in
   let e =
@@ -22,7 +22,7 @@ value tag_encloser loc tag newl enewl a el =
             match e with
             [ <:expr< $str:frm$ >> -> frm
             | _ ->
-                Stdpp.raise_with_loc (MLast.loc_of_expr e)
+                Loc.raise (Ast.loc_of_expr e)
                   (Stream.Error "string or 'do' expected") ]
           in
           (" " ^ frm, al)
@@ -31,10 +31,10 @@ value tag_encloser loc tag newl enewl a el =
     List.fold_left (fun f e -> <:expr< $f$ $e$ >>)
       <:expr< Wserver.printf $str:"<" ^ tag ^ frm ^ ">" ^ s$ >> al
   in
-  [e :: el @ [<:expr< Wserver.printf $str:"</" ^ tag ^ ">" ^ se$ >>]]
+  [e :: el @ [ <:expr< Wserver.printf $str:"</" ^ tag ^ ">" ^ se$ >> ]]
 ;
 
-value tag_alone loc tag a =
+value tag_alone _loc tag a =
   let s = "\\n" in
   let e =
     let (frm, al) =
@@ -45,7 +45,7 @@ value tag_alone loc tag a =
             match e with
             [ <:expr< $str:frm$ >> -> frm
             | _ ->
-                Stdpp.raise_with_loc (MLast.loc_of_expr e)
+                Loc.raise (Ast.loc_of_expr e)
                   (Stream.Error "string or 'do' expected") ]
           in
           (" " ^ frm, al)
@@ -57,20 +57,22 @@ value tag_alone loc tag a =
   <:expr< $e$ conf.xhs >>
 ;
 
-EXTEND
+value expr = Gram.Entry.mk "expr";
+
+EXTEND Gram
   GLOBAL: expr;
   expr: LEVEL "top"
     [ [ "tag"; (tn, al, el) = tag_body ->
-          let el = tag_encloser loc tn True True al el in
+          let el = tag_encloser _loc tn True True al el in
           <:expr< do { $list:el$ } >>
       | "stag"; (tn, al, el) = tag_body ->
-          let el = tag_encloser loc tn False False al el in
+          let el = tag_encloser _loc tn False False al el in
           <:expr< do { $list:el$ } >>
       | "stagn"; (tn, al, el) = tag_body ->
-          let el = tag_encloser loc tn False True al el in
+          let el = tag_encloser _loc tn False True al el in
           <:expr< do { $list:el$ } >>
       | "xtag"; tn = STRING; a = OPT expr ->
-          tag_alone loc tn a ] ]
+          tag_alone _loc tn a ] ]
   ;
   tag_body:
     [ [ tn = STRING; a = OPT expr; "begin"; el = LIST0 expr_semi; "end" ->

@@ -1,5 +1,8 @@
+(* camlp4r *)
 (* $Id: q_codes.ml,v 5.4 2012-01-16 22:11:29 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
+
+open Camlp4.PreCast;
 
 value f _ =
   fun
@@ -14,10 +17,11 @@ value f _ =
   | "CODE_STRING8" -> "0x9"
   | "CODE_STRING32" -> "0xA"
   | x ->
-      Stdpp.raise_with_loc (Token.make_loc (0, String.length x))
+      Loc.raise (Loc.mk x)
         (Failure ("bad code " ^ x)) ]
 ;
 
-Quotation.add "codes" (Quotation.ExStr f);
+(* MAUVAIS *)
+(* Quotation.add "codes" (Quotation.ExStr f); *)
 Quotation.default.val := "codes";
 
