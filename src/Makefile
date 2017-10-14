@@ -61,8 +61,9 @@ compilation.cmx: $(GWD_OBJS1:.cmo=.cmx) $(GWD_OBJS2.cmo=.cmx) gwd.cmx
 compilation.ml: always
 	> compilation.ml
 	echo "open Def;" >> compilation.ml
-	echo "value (wd, d, h) = ($$(date "+%u, {day=%d;month=%m;year=%Y;prec=Sure;delta=0}, \"%T %Z\""));" >> compilation.ml
-	echo "value ct conf = Printf.sprintf \" (%4d-%02d-%02d %s)\" d.year d.month d.day h;" >> compilation.ml
+	#echo "value (wd, d, h) = ($$(date "+%u, {day=%d;month=%m;year=%Y;prec=Sure;delta=0}, \"%T %Z\""));" >> compilation.ml
+	#echo "value ct conf = Printf.sprintf \" (%4d-%02d-%02d %s)\" d.year d.month d.day h;" >> compilation.ml
+	echo "value ct conf = Printf.sprintf \"(compilation time not available, wiki.debian.org/ReproducibleBuilds)\";" >> compilation.ml
 	echo "Util.compilation_time_hook.val := ct;" >> compilation.ml
 
 clean::
