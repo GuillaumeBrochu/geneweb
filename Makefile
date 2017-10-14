@@ -68,30 +68,16 @@ uninstall:
 distrib: new_distrib wrappers
 
 wrappers:
+	mkdir -p $(DESTDIR)/bases
 	if test "$(CAMLP5F)" = "-DWIN95"; then \
-	  echo -ne 'setlocal enableextensions\r\n' > $(DESTDIR)/gwd.bat; \
-	  echo -ne 'md bases\r\n' >> $(DESTDIR)/gwd.bat; \
-	  echo -ne 'endlocal\r\n' >> $(DESTDIR)/gwd.bat; \
-	  echo -ne 'cd bases\r\n' >> $(DESTDIR)/gwd.bat; \
-	  echo -ne 'start /MIN ..\\gw\\gwd -hd ..\\gw\r\n' >> $(DESTDIR)/gwd.bat; \
-	  echo -ne 'setlocal enableextensions\r\n' > $(DESTDIR)/gwsetup.bat; \
-	  echo -ne 'md bases\r\n' >> $(DESTDIR)/gwsetup.bat; \
-	  echo -ne 'endlocal\r\n' >> $(DESTDIR)/gwsetup.bat; \
-	  echo -ne 'cd bases\r\n' >> $(DESTDIR)/gwsetup.bat; \
-	  echo -ne 'start /MIN ..\\gw\\gwsetup -lang fr -gd ..\\gw\r\n' >> $(DESTDIR)/gwsetup.bat; \
-	  echo -ne 'start ..\\gw\\gui' > $(DESTDIR)/geneweb_gui.bat; \
+	  cp etc/Windows/gwd.bat $(DESTDIR); \
+	  cp etc/Windows/gwsetup.bat $(DESTDIR); \
+	  cp etc/Windows/geneweb_gui.bat $(DESTDIR); \
+	  cp etc/Windows/Start_Geneweb.bat $(DESTDIR); \
 	else \
-	  (echo '#!/bin/sh'; \
-	   echo 'mkdir -p bases'; \
-	   echo 'cd bases'; \
-	   echo 'exec ../gw/gwd -hd ../gw "$$@"') > $(DESTDIR)/gwd; \
-	  (echo '#!/bin/sh'; \
-	   echo 'mkdir -p bases'; \
-	   echo 'cd bases'; \
-	   echo 'exec ../gw/gwsetup -gd ../gw "$$@"') > $(DESTDIR)/gwsetup; \
-	  (echo '#!/bin/sh'; \
-	   echo 'exec ../gw/gui') > $(DESTDIR)/geneweb_gui; \
-	  chmod +x $(DESTDIR)/gwd $(DESTDIR)/gwsetup $(DESTDIR)/geneweb_gui; \
+	  cp etc/gwd $(DESTDIR); \
+	  cp etc/gwsetup $(DESTDIR); \
+	  cp etc/geneweb_gui $(DESTDIR); \
 	fi
 
 new_distrib: classical_distrib
