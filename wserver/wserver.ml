@@ -338,9 +338,9 @@ value treat_connection tmout callback addr fd = do {
   try flush stderr with _ -> ();
 };
 
-IFDEF WIN95 THEN
 value buff = Bytes.create 1024;
 
+IFDEF WIN95 THEN
 value copy_what_necessary t oc =
   let strm =
     let len = ref 0 in
