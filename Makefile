@@ -71,6 +71,7 @@ distrib: new_distrib wrappers
 
 wrappers:
 	if test "$(CAMLP5F)" = "-DWIN95"; then \
+	  cp etc/Windows/Start_Geneweb.bat $(DESTDIR); \
 	  echo -ne 'setlocal enableextensions\r\n' > $(DESTDIR)/gwd.bat; \
 	  echo -ne 'md bases\r\n' >> $(DESTDIR)/gwd.bat; \
 	  echo -ne 'endlocal\r\n' >> $(DESTDIR)/gwd.bat; \
