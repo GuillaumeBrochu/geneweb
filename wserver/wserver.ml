@@ -355,7 +355,7 @@ value copy_what_necessary t oc =
            }
            else ();
            if len.val = 0 then None
-           else do { incr i; Some buff.[i.val - 1] }
+           else do { incr i; Some (Bytes.get buff (i.val - 1)) }
          })
   in
   let _ = get_request_and_content strm in
