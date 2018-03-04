@@ -19,7 +19,7 @@ open Gwdb;
 
 (* Backward compatibility option before the additional fields. *)
 value old_gw = ref False;
-value std_fields = ref False;
+value std_fields = ref True;
 
 value put_events_in_notes base p =
   (* Si on est en mode old_gw, on mets tous les évènements *)
@@ -2041,7 +2041,7 @@ value speclist =
      it is Public. All the spouses and descendants are also censored.");
    ("-old_gw", Arg.Set old_gw, ": Do not export additional fields (events)\
 (for backward compatibility: < 7.00)");
-   ("-export_std_fields", Arg.Set std_fields, ": Export redundant standard fields");
+   ("-no_std_fields", Arg.Clear std_fields, ": Do not export redundant standard fields");
    ("-raw", Arg.Set raw_output,
     "raw output (without possible utf-8 conversion)");
    ("-v", Arg.Set Mutil.verbose, "verbose");
