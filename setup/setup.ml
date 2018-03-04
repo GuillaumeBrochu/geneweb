@@ -694,7 +694,7 @@ value print_file conf bname =
 value error conf str =
   do {
     header conf (fun _ -> Wserver.printf "Incorrect request");
-    Wserver.printf "<em>%s</em>\n" (String.capitalize_ascii str);
+    Wserver.printf "<em>%s</em>\n" (String.capitalize str);
     trailer conf
   }
 ;
@@ -802,7 +802,7 @@ value simple conf =
     | None -> "" ]
   in
   let ged =
-    if Filename.check_suffix (String.lowercase_ascii ged) ".ged" then ged
+    if Filename.check_suffix (String.lowercase ged) ".ged" then ged
     else ""
   in
   let out_file =
@@ -836,7 +836,7 @@ value simple2 conf =
     | None -> "" ]
   in
   let ged =
-    if Filename.check_suffix (String.lowercase_ascii ged) ".ged" then ged
+    if Filename.check_suffix (String.lowercase ged) ".ged" then ged
     else ""
   in
   let out_file =
@@ -988,7 +988,7 @@ value gwu_or_gwb2ged_check suffix conf =
     if out_file = "" || out_file = Filename.current_dir_name then
       in_file ^ suffix
     else if Filename.check_suffix out_file suffix then out_file
-    else if Filename.check_suffix out_file (String.uppercase_ascii suffix) then
+    else if Filename.check_suffix out_file (String.uppercase suffix) then
       out_file
     else out_file ^ suffix
   in
@@ -1054,7 +1054,7 @@ value has_gwu dir =
               [ "gwu" -> raise Exit
               | _ -> loop () ]
             ELSE
-              match String.lowercase_ascii e with
+              match String.lowercase e with
               [ "gwu.exe" -> raise Exit
               | _ -> loop () ]
             END
@@ -1873,7 +1873,7 @@ value setup (addr, req) comm env_str =
     let env = create_env env_str in
     if env = [] && (comm = "" || String.length comm = 2) then
       let lang =
-        if comm = "" then default_lang.val else String.lowercase_ascii comm
+        if comm = "" then default_lang.val else String.lowercase comm
       in
       let lexicon = input_lexicon lang in
       {lang = lang; comm = ""; env = env; request = req; lexicon = lexicon}
@@ -2033,7 +2033,7 @@ value intro () =
         let (gwd_lang, setup_lang) =
           if String.length lang_param.val < 2 then do {
             copy_text "" "intro.txt";
-            let x = String.lowercase_ascii (input_line stdin) in
+            let x = String.lowercase (input_line stdin) in
             if String.length x < 2 then
               (default_gwd_lang, default_setup_lang)
             else let x = String.sub x 0 2 in (x, x)

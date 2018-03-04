@@ -332,7 +332,7 @@ value translate_dmy conf (fst, snd, trd) cal short =
         else french_month conf (int_of_string m)
     | Dhebrew when m <> "" ->
         if short then
-          String.uppercase_ascii
+          String.uppercase
             (String.sub (hebrew_month conf (int_of_string m)) 0 2)
         else hebrew_month conf (int_of_string m)
     | _ -> m ]
