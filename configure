@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OCAML_MIN_VER="4.02"
+OCAML_MIN_VER="4.06"
 
 verge() {
     # osx doesn't have sort -V
