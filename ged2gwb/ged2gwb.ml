@@ -1679,7 +1679,7 @@ value rec find_all_rela nl =
             [ [n :: nl1] ->
                 let len = String.length n in
                 if String.length r1.rval >= len &&
-                   String.lowercase_ascii (String.sub r1.rval 0 len) = n
+                   String.lowercase (String.sub r1.rval 0 len) = n
                 then [(n, r.rval) :: find_all_rela nl rl]
                 else loop nl1
             | [] -> find_all_rela nl rl ]
@@ -1898,8 +1898,7 @@ value treat_indi_pevent gen ip r =
                  if List.mem rr.rval primary_pevents then
                    find_pevent_name_from_tag gen rr.rval rr.rval
                  else
-                   find_pevent_name_from_tag
-                     gen (String.lowercase_ascii rr.rval) rr.rval
+                   find_pevent_name_from_tag gen (String.lowercase rr.rval) rr.rval
                in
                let date =
                  match find_field "DATE" r.rsons with
@@ -1986,7 +1985,7 @@ value applycase_surname s =
   | LowerCase -> capitalize_name s
   | UpperCase ->
       if charset.val = Utf8 then uppercase_name s
-      else String.uppercase_ascii s ]
+      else String.uppercase s ]
 ;
 
 value reconstitute_from_pevents pevents bi bp de bu =
@@ -2566,14 +2565,14 @@ value treat_fam_fevent gen ifath imoth r =
   let check_place_unmarried efam_name place r =
     match find_all_fields "PLAC" r.rsons with
     [ [r :: rl] ->
-        if String.uncapitalize_ascii r.rval = "unmarried" then
+        if String.uncapitalize r.rval = "unmarried" then
           (Efam_NoMarriage, "")
         else
           let place = strip_spaces r.rval in
           loop rl where rec loop =
             fun
             [ [r :: rl] ->
-                if String.uncapitalize_ascii r.rval = "unmarried" then
+                if String.uncapitalize r.rval = "unmarried" then
                   (Efam_NoMarriage, place)
                 else loop rl
             | [] -> (efam_name, place) ]
@@ -2628,7 +2627,7 @@ value treat_fam_fevent gen ifath imoth r =
               [ Efam_Marriage ->
                   match find_field "TYPE" r.rsons with
                   [ Some r ->
-                      if String.uncapitalize_ascii r.rval = "unmarried" then
+                      if String.uncapitalize r.rval = "unmarried" then
                         (Efam_NoMarriage, place)
                       else
                         check_place_unmarried name place r
@@ -2661,8 +2660,7 @@ value treat_fam_fevent gen ifath imoth r =
                  if List.mem rr.rval primary_fevents then
                    find_fevent_name_from_tag gen rr.rval rr.rval
                  else
-                   find_fevent_name_from_tag
-                     gen (String.lowercase_ascii rr.rval) rr.rval
+                   find_fevent_name_from_tag gen (String.lowercase rr.rval) rr.rval
                in
                let date =
                  match find_field "DATE" r.rsons with
@@ -2905,14 +2903,14 @@ value add_fam_norm gen r adop_list =
           let (u, p) =
             match find_all_fields "PLAC" r.rsons with
             [ [r :: rl] ->
-                if String.uncapitalize_ascii r.rval = "unmarried" then
+                if String.uncapitalize r.rval = "unmarried" then
                   (NotMarried, "")
                 else
                   let p = strip_spaces r.rval in
                   loop rl where rec loop =
                     fun
                     [ [r :: rl] ->
-                        if String.uncapitalize_ascii r.rval = "unmarried" then
+                        if String.uncapitalize r.rval = "unmarried" then
                           (NotMarried, p)
                         else loop rl
                     | [] -> (relation, p) ]
@@ -2921,7 +2919,7 @@ value add_fam_norm gen r adop_list =
           let u =
             match find_field "TYPE" r.rsons with
             [ Some r ->
-                if String.uncapitalize_ascii r.rval = "gay" then
+                if String.uncapitalize r.rval = "gay" then
                   NoSexesCheckNotMarried
                 else u
             | None -> u ]
