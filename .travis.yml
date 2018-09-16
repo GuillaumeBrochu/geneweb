@@ -32,8 +32,9 @@ script:
     set -ex ;
     export OPAMYES=1 ;
     eval $(opam config env) ;
-    opam install camlp5 ocamlfind ;
+    opam install camlp5 && opam depext lablgtk && opam install lablgtk ;
     ./configure ;
+    if [[ $OCAML_VERSION < 4.06 ]]; then sed -i $'s/-safe-string/-unsafe-string/g' tools/Makefile.inc ; fi ;
     make && make distrib && make clean ;
 
 notifications:

@@ -17,7 +17,8 @@ install:
   - '%CYG_BASH% "opam install -y depext depext-cygwinports"'
   - 'set PATH=%PATH%;/usr/x86_64-w64-mingw32/sys-root/mingw/bin'
   - 'set OPAMYES=1'
-  - '%CYG_BASH% "opam install camlp5 ocamlfind"'
+  - '%CYG_BASH% "opam install depext depext-cygwinports"'
+  - '%CYG_BASH% "opam install camlp5"'
 
 build_script:
-  - '%CYG_BASH% "cd ${APPVEYOR_BUILD_FOLDER} && ./configure && make && make distrib && make clean"'
+  - '%CYG_BASH% "cd ${APPVEYOR_BUILD_FOLDER} && opam depext lablgtk && opam install lablgtk && ./configure && sed -i $''s/-safe-string/-unsafe-string/g'' tools/Makefile.inc && make && make distrib && make clean"'
