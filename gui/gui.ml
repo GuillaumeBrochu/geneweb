@@ -237,20 +237,28 @@ let close_server conf =
       clean_waiting_pids conf;
       Printf.eprintf "Closing...";
       flush stderr;
-      (* Making a (empty) file STOP_SERVER to make the server stop. *)
-      let stop_server =
-        List.fold_left Filename.concat conf.bases_dir ["cnt"; "STOP_SERVER"]
-      in
-      let oc = open_out stop_server in
-      close_out oc;
-      (* Send a phony connection to unblock it. *)
-      let s = Unix.socket Unix.PF_INET Unix.SOCK_STREAM 0 in
-      begin try
-        Unix.connect s (Unix.ADDR_INET (Unix.inet_addr_loopback, conf.port))
-      with Unix.Unix_error (_, _, _) -> ()
-      end;
-      (try Unix.close s with Unix.Unix_error (_, _, _) -> ());
-      ignore (Unix.waitpid [] server_pid);
+      (* Do not try to stop server if it is not responding *)
+      let (pid, ps) = Unix.waitpid [Unix.WNOHANG] server_pid in
+      if pid = 0 then
+        begin
+          let stop_server =
+            List.fold_left Filename.concat conf.bases_dir ["cnt"; "STOP_SERVER"]
+          in
+          let oc = open_out stop_server in
+          close_out oc;
+          (* Send a phony connection to unblock it. *)
+          let s = Unix.socket Unix.PF_INET Unix.SOCK_STREAM 0 in
+            begin
+              try Unix.connect s
+                (Unix.ADDR_INET (Unix.inet_addr_loopback, conf.port))
+              with Unix.Unix_error (_, _, _) -> ()
+            end;
+          (try Unix.close s with Unix.Unix_error (_, _, _) -> ());
+          ignore (Unix.waitpid [] server_pid);
+          (* Remove the STOP_SERVER file after use to avoid blocking other
+          possible gwd instances (other than gui) using the same base folder *)
+          try Sys.remove stop_server with Sys_error _ -> ()
+        end;
       conf.server_running <- None;
       Printf.eprintf "\n";
       flush stderr
