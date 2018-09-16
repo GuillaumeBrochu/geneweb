@@ -215,6 +215,7 @@ distrib: distrib-exe
 	cp $(BUILD_DIR)/contrib/gwbase/etc/connex.exe $(DISTRIB_DIR)/gw/connex$(EXE); \
 	cp $(BUILD_DIR)/contrib/gwdiff/gwdiff.exe $(DISTRIB_DIR)/gw/gwdiff$(EXE); \
 	cp $(BUILD_DIR)/setup/setup.exe $(DISTRIB_DIR)/gw/gwsetup$(EXE); \
+	cp $(BUILD_DIR)/gui/gui.exe $(DISTRIB_DIR)/gw/gui$(EXE); \
 	cp $(BUILD_DIR)/src/update_nldb.exe $(DISTRIB_DIR)/gw/update_nldb$(EXE); \
 	mkdir $(DISTRIB_DIR)/gw/gwtp_tmp
 	mkdir $(DISTRIB_DIR)/gw/gwtp_tmp/lang
@@ -229,6 +230,7 @@ distrib: distrib-exe
 	cp setup/lang/*.htm $(DISTRIB_DIR)/gw/setup/lang/
 	cp setup/lang/lexicon.txt $(DISTRIB_DIR)/gw/setup/lang/
 	cp setup/lang/intro.txt $(DISTRIB_DIR)/gw/setup/lang/
+	cp gui/gw/gui_lex.txt $(DISTRIB_DIR)/gw/
 	cp -R hd/* $(DISTRIB_DIR)/gw/
 	$(RM) $(DISTRIB_DIR)/exe-version.txt
 	echo "Commit: `git log  -1 | grep commit | cut -c8-15`, `date`"      > $(DISTRIB_DIR)/commit.txt
