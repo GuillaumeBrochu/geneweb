@@ -38,9 +38,6 @@ val check_person :
     string option
 val error_person : config -> string -> unit
 val update_relations_of_related : base -> iper -> iper list -> unit
-val reconstitute_death :
-  config -> Def.date option -> Def.date option -> string -> Def.burial ->
-    string -> Def.death
 val reconstitute_from_pevents :
   ('a, string) Def.gen_pers_event list -> bool ->
     Def.cdate * string * string * string ->

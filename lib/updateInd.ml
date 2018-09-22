@@ -67,14 +67,6 @@ and eval_simple_var conf base env p =
   | ["acc_if_titles"] -> bool_val (p.access = IfTitles)
   | ["acc_private"] -> bool_val (p.access = Private)
   | ["acc_public"] -> bool_val (p.access = Public)
-  | ["bapt_place"] -> str_val (quote_escaped p.baptism_place)
-  | ["bapt_note"] -> str_val (quote_escaped p.baptism_note)
-  | ["bapt_src"] -> str_val (quote_escaped p.baptism_src)
-  | ["birth"; s] -> eval_date_var (Adef.od_of_cdate p.birth) s
-  | ["birth_place"] -> str_val (quote_escaped p.birth_place)
-  | ["birth_note"] -> str_val (quote_escaped p.birth_note)
-  | ["birth_src"] -> str_val (quote_escaped p.birth_src)
-  | ["bapt"; s] -> eval_date_var (Adef.od_of_cdate p.baptism) s
   | ["bt_buried"] ->
       bool_val
         (match p.burial with
@@ -86,29 +78,8 @@ and eval_simple_var conf base env p =
            Cremated _ -> true
          | _ -> false)
   | ["bt_unknown_burial"] -> bool_val (p.burial = UnknownBurial)
-  | ["burial"; s] ->
-      let od =
-        match p.burial with
-          Buried cod -> Adef.od_of_cdate cod
-        | Cremated cod -> Adef.od_of_cdate cod
-        | _ -> None
-      in
-      eval_date_var od s
-  | ["burial_place"] -> str_val (quote_escaped p.burial_place)
-  | ["burial_note"] -> str_val (quote_escaped p.burial_note)
-  | ["burial_src"] -> str_val (quote_escaped p.burial_src)
   | ["cnt"] -> eval_int_env "cnt" env
   | ["dead_dont_know_when"] -> bool_val (p.death = DeadDontKnowWhen)
-  | ["death"; s] ->
-      let od =
-        match p.death with
-          Death (_, cd) -> Some (Adef.date_of_cdate cd)
-        | _ -> None
-      in
-      eval_date_var od s
-  | ["death_place"] -> str_val (quote_escaped p.death_place)
-  | ["death_note"] -> str_val (quote_escaped p.death_note)
-  | ["death_src"] -> str_val (quote_escaped p.death_src)
   | ["died_young"] -> bool_val (p.death = DeadYoung)
   | ["digest"] -> eval_string_env "digest" env
   | ["dont_know_if_dead"] -> bool_val (p.death = DontKnowIfDead)
