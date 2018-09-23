@@ -5,5 +5,5 @@
 
 (install
  (section bin)
- (files ged2gwb.exe ged2gwb2.exe)
+ (files ged2gwb.exe)
 )
