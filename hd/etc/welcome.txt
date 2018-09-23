@@ -9,7 +9,6 @@
   <meta name="robots" content="none"%/>
   <link rel="shortcut icon" href="%image_prefix;/favicon_gwd.png"%/>
   %include.js;
-  <script type="text/javascript" src="jquery_placeholder_min.js"></script>
   %include.css;
   %base_header;
 </head>

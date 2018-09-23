@@ -1,1 +1,4 @@
-<script type="text/javascript" src="jquery_1_9_1_min.js"></script>
+<script language="javascript" type="text/javascript"
+src="/javascript/jquery/jquery.min.js"></script>
+<script language="javascript" type="text/javascript"
+src="/javascript/jquery-placeholder/jquery.placeholder.js"></script>
