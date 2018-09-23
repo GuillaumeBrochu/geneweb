@@ -204,13 +204,11 @@ distrib: distrib-exe
 	echo "-setup_link" > $(DISTRIB_DIR)/gw/gwd.arg
 	cp $(BUILD_DIR)/src/gwc1.exe $(DISTRIB_DIR)/gw/gwc$(EXE); \
 	cp $(BUILD_DIR)/src/gwc1.exe $(DISTRIB_DIR)/gw/gwc1$(EXE); \
-	cp $(BUILD_DIR)/src/gwc2.exe $(DISTRIB_DIR)/gw/gwc2$(EXE); \
 	cp $(BUILD_DIR)/src/mk_consang.exe $(DISTRIB_DIR)/gw/mk_consang$(EXE); \
 	cp $(BUILD_DIR)/src/mk_consang.exe $(DISTRIB_DIR)/gw/consang$(EXE); \
 	cp $(BUILD_DIR)/src/gwd.exe $(DISTRIB_DIR)/gw/gwd$(EXE); \
 	cp $(BUILD_DIR)/src/gwu.exe $(DISTRIB_DIR)/gw/gwu$(EXE); \
 	cp $(BUILD_DIR)/ged2gwb/ged2gwb.exe $(DISTRIB_DIR)/gw/ged2gwb$(EXE); \
-	cp $(BUILD_DIR)/ged2gwb/ged2gwb2.exe $(DISTRIB_DIR)/gw/ged2gwb2$(EXE); \
 	cp $(BUILD_DIR)/gwb2ged/gwb2ged.exe $(DISTRIB_DIR)/gw/gwb2ged$(EXE); \
 	cp $(BUILD_DIR)/contrib/gwbase/etc/connex.exe $(DISTRIB_DIR)/gw/connex$(EXE); \
 	cp $(BUILD_DIR)/contrib/gwdiff/gwdiff.exe $(DISTRIB_DIR)/gw/gwdiff$(EXE); \

@@ -412,20 +412,8 @@ let gwc1 conf bname fname =
   let args = if fname <> "" then fname :: args else args in
   exec_wait conf prog args
 
-let gwc2 conf bname fname =
-  let prog = Filename.concat bin_dir "gwc2" in
-  let args = ["-v"; "-nc"; "-o"; bname] in
-  let args = if fname <> "" then fname :: args else args in
-  exec_wait conf prog args
-
 let ged2gwb conf bname fname =
   let prog = Filename.concat bin_dir "ged2gwb" in
-  let args = ["-nc"; "-o"; bname] in
-  let args = if fname <> "" then fname :: args else args in
-  exec_wait conf prog args
-
-let ged2gwb2 conf bname fname =
-  let prog = Filename.concat bin_dir "ged2gwb2" in
   let args = ["-nc"; "-o"; bname] in
   let args = if fname <> "" then fname :: args else args in
   exec_wait conf prog args
@@ -473,12 +461,12 @@ let create_base conf bname src_file =
   if bname = "" then ()
   else
     begin
-      if src_file = "" then gwc2 conf bname src_file
+      if src_file = "" then gwc1 conf bname src_file
       else
         begin let fname = String.lowercase_ascii src_file in
-          if Filename.check_suffix fname ".gw" then gwc2 conf bname src_file
+          if Filename.check_suffix fname ".gw" then gwc1 conf bname src_file
           else if Filename.check_suffix fname ".ged" then
-            ged2gwb2 conf bname src_file
+            ged2gwb conf bname src_file
           else error_popup (transl "Unknown file")
         end;
       let gwf_file = Filename.concat conf.bases_dir (bname ^ ".gwf") in
@@ -504,7 +492,7 @@ let clean_database conf bname =
   gwu conf bname (bname ^ "_save");
   rename_base conf bname (bname ^ "_old");
   let fname = Filename.concat conf.bases_dir (bname ^ "_save.gw") in
-  gwc2 conf bname fname; consang conf bname; update_nldb conf bname
+  gwc1 conf bname fname; consang conf bname; update_nldb conf bname
 
 let merge conf bnames bname parameters =
   (* TODO : même méthode que clean *)
