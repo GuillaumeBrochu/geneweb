@@ -14,7 +14,7 @@ module Make (Select : Select) =
     open Def
     open Gwdb
     let old_gw = ref false
-    let std_fields = ref true
+    let std_fields = ref true (* default : -export_std_fields *)
     let put_events_in_notes base p =
       (* Si on est en mode old_gw, on mets tous les évènements *)
       (* dans les notes.                                       *)
@@ -1830,6 +1830,8 @@ module Make (Select : Select) =
                                    (for backward compatibility: < 7.00)";
        "-no_std_fields", Arg.Clear std_fields,
        ": Do not export redundant standard fields";
+       "-export_std_fields", Arg.Set std_fields,
+       ": Export redundant standard fields (default)";
        "-raw", Arg.Set raw_output,
        "raw output (without possible utf-8 conversion)";
        "-v", Arg.Set Mutil.verbose, "verbose";
