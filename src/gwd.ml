@@ -1388,7 +1388,7 @@ value auth_err request auth_file =
     let auth = Wserver.extract_param "authorization: " '\r' request in
     if auth <> "" then
       match
-        try Some (Secure.open_in auth_file) with [ Sys_error _ -> None ]
+        try Some (open_in auth_file) with [ Sys_error _ -> None ]
       with
       [ Some ic ->
           let auth =
