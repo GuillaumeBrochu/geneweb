@@ -1,0 +1,2 @@
+OCAMLC=ocamlc.opt -unsafe-string
+OCAMLOPT=ocamlopt.opt -unsafe-string
