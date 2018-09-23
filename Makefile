@@ -188,6 +188,7 @@ distrib: distrib-exe
 	if test $(OS_TYPE) = "Win"; then \
 	  cp etc/Windows/gwd.bat $(DISTRIB_DIR); \
 	  cp etc/Windows/gwsetup.bat $(DISTRIB_DIR); \
+	  cp etc/Windows/Start_Geneweb.bat $(DISTRIB_DIR); \
 	  cp -f etc/Windows/README.txt $(DISTRIB_DIR)/README.txt; \
 	  cp -f etc/Windows/LISEZMOI.txt $(DISTRIB_DIR)/LISEZMOI.txt; \
 	elif test $(OS_TYPE) = "Darwin"; then \
