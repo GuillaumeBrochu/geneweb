@@ -1,0 +1,18 @@
+--- a/hd/etc/js.txt
++++ b/hd/etc/js.txt
+@@ -1 +1,4 @@
+-<script type="text/javascript" src="jquery_1_9_1_min.js"></script>
++<script language="javascript" type="text/javascript"
++src="/javascript/jquery/jquery.min.js"></script>
++<script language="javascript" type="text/javascript"
++src="/javascript/jquery-placeholder/jquery.placeholder.js"></script>
+--- a/hd/etc/welcome.txt
++++ b/hd/etc/welcome.txt
+@@ -9,7 +9,6 @@
+   <meta name="robots" content="none"%/>
+   <link rel="shortcut icon" href="%image_prefix;/favicon_gwd.png"%/>
+   %include.js;
+-  <script type="text/javascript" src="jquery_placeholder_min.js"></script>
+   %include.css;
+   %base_header;
+ </head>

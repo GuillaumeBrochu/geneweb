@@ -1,0 +1,27 @@
+Goal: Better German translation (attempt)
+Fixes: #176408
+
+Status wrt upstream: Not applied and not proposed
+
+Index: b/hd/lang/lexicon.txt
+===================================================================
+--- a/hd/lang/lexicon.txt	2009-11-08 17:26:10.000000000 +0100
++++ b/hd/lang/lexicon.txt	2009-11-08 17:26:26.000000000 +0100
+@@ -1489,7 +1489,7 @@
+ ca: després de
+ cs: po
+ da: efter
+-de: nach
++de: nachher
+ en: after
+ eo: post
+ es: después de
+@@ -2108,7 +2108,7 @@
+ ca: abans de
+ cs: pøed
+ da: før
+-de: vor
++de: vorher
+ en: before
+ eo: antaù
+ es: antes

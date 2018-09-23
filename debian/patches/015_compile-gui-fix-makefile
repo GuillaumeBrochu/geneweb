@@ -1,0 +1,104 @@
+--- a/Makefile
++++ b/Makefile
+@@ -18,6 +18,7 @@
+ 	cd gwb2ged; $(MAKE) all
+ 	cd setup; $(MAKE) all
+ 	cd gwtp; $(MAKE) all
++	cd gui; $(MAKE) all
+ 
+ opt::
+ 	cd wserver; $(MAKE) opt
+@@ -27,6 +28,7 @@
+ 	cd gwb2ged; $(MAKE) opt
+ 	cd setup; $(MAKE) opt
+ 	cd gwtp; $(MAKE) opt
++	cd gui; $(MAKE) opt
+ 
+ install:
+ 	mkdir -p $(PREFIX)/bin
+@@ -77,6 +79,7 @@
+ 	  echo -ne 'endlocal\r\n' >> $(DESTDIR)/gwsetup.bat; \
+ 	  echo -ne 'cd bases\r\n' >> $(DESTDIR)/gwsetup.bat; \
+ 	  echo -ne 'start /MIN ..\\gw\\gwsetup -lang fr -gd ..\\gw\r\n' >> $(DESTDIR)/gwsetup.bat; \
++	  echo -ne 'start ..\\gw\\gui' > $(DESTDIR)/geneweb_gui.bat; \
+ 	else \
+ 	  (echo '#!/bin/sh'; \
+ 	   echo 'cd `dirname $$0`'; \
+@@ -88,7 +91,9 @@
+ 	   echo 'mkdir -p bases'; \
+ 	   echo 'cd bases'; \
+ 	   echo 'exec ../gw/gwsetup -gd ../gw "$$@"') > $(DESTDIR)/gwsetup; \
+-	  chmod +x $(DESTDIR)/gwd $(DESTDIR)/gwsetup; \
++	  (echo '#!/bin/sh'; \
++	   echo 'exec ../gw/gui') > $(DESTDIR)/geneweb_gui; \
++	  chmod +x $(DESTDIR)/gwd $(DESTDIR)/gwsetup $(DESTDIR)/geneweb_gui; \
+ 	fi
+ 	if test $(shell uname -s) = "Darwin"; then \
+ 	  cp etc/MacOSX/GeneWeb.command $(DESTDIR); \
+@@ -110,6 +115,8 @@
+ 	cp setup/lang/*.htm $(DESTDIR)/gw/setup/lang/.
+ 	cp setup/lang/lexicon.txt $(DESTDIR)/gw/setup/lang/.
+ 	cp setup/gwsetup $(DESTDIR)/gw/gwsetup$(EXE)
++	cp gui/gw/gui_lex.txt $(DESTDIR)/gw/.
++	cp gui/gui $(DESTDIR)/gw/gui$(EXE)
+ 	cp LICENSE $(DESTDIR)/LICENSE.txt
+ 	cp etc/START.htm $(DESTDIR)/.
+ 	cp CHANGES $(DESTDIR)/CHANGES.txt
+@@ -162,6 +169,7 @@
+ 	cd gwb2ged; $(MAKE) clean
+ 	cd setup; $(MAKE) clean
+ 	cd gwtp; $(MAKE) clean
++	cd gui; $(MAKE) clean
+ 	$(RM) -rf $(DESTDIR)
+ 	$(RM) -f *~ .#*
+ 
+@@ -177,3 +185,4 @@
+ 	cd gwb2ged; $(MAKE) depend
+ 	cd setup; $(MAKE) depend
+ 	cd gwtp; $(MAKE) depend
++	cd gui; $(MAKE) depend
+--- a/gui/Makefile
++++ b/gui/Makefile
+@@ -2,16 +2,13 @@
+ # Copyright (c) 2006-2007 INRIA
+ 
+ include ../tools/Makefile.inc
+-
+-LABLGTK2=+lablgtk2
+-OCAMLC=ocamlc.opt
+-OCAMLOPT=ocamlopt.opt -annot
++LABLGTK2=`ocamlfind query lablgtk2`/
+ GWB=..
+ OBJS=../src/version.cmo ../src/iovalue.cmo ../src/buff.cmo ../src/name.cmo ../src/mutil.cmo gui.cmo
+ OCAMLI=-I ../src -I $(LABLGTK2)
+-TEST_DIR=test $$(basename "$<") = "$<" || { echo "Please run 'make' in directory '$$(dirname "$<")' first"; exit 1; }
++# TEST_DIR=test $$(basename "$<") = "$<" || { echo "Please run 'make' in directory '$$(dirname "$<")' first"; exit 1; }
+ 
+-all:: opt
++all:: out
+ 
+ out:: gui.out
+ 	$(RM) gui
+@@ -20,6 +17,7 @@
+ opt:: gui.opt
+ 	$(RM) gui
+ 	cp gui.opt gui
++	$(STRIP) gui
+ 
+ gui.out: $(OBJS)
+ 	$(OCAMLC) -I $(LABLGTK2) lablgtk.cma unix.cma $(OBJS) -o gui.out
+@@ -31,11 +29,11 @@
+ 	$(RM) gui
+ 
+ depend:
+-	export LC_ALL=C; TOP=$(GWB) $(GWB)/tools/camlp5_depend.sh $(OCAMLI) $$(ls *.mli *.ml) | sed -e 's|\.\.|$$(GWB)|g' > .depend.new
++	$(ROOT)/tools/camlp5_depend.sh $(CAMLP5F) $(OCAMLI) -- *.ml* > .depend
+ 	mv .depend.new .depend
+ 
+ %.cmo: %.ml
+-	@$(TEST_DIR)
+-	ocamlc -pp camlp5r $(OCAMLI) -I +lablgtk2 -c $<
++#	@$(TEST_DIR)
++	$(OCAMLC) -pp camlp5r $(OCAMLI) -I $(LABLGTK2) -c $<
+ 
+ include .depend

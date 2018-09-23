@@ -1,0 +1,8 @@
+000_Makefile.debian
+002_de-translation
+004_gwd.ml-readauth
+010_gwsetup-fhs
+015_compile-gui-fix-makefile
+018_fix_templates_jquery
+020_ReproducibleBuilds
+021_fix_gui_for_debian

@@ -1,0 +1,17 @@
+Goal: allow auth file to be kept outside geneweb restricted environment
+Fixes: #287392
+
+Status wrt upstream: will not be applied because of upstream design choices
+
+
+--- a/src/gwd.ml
++++ b/src/gwd.ml
+@@ -1388,7 +1388,7 @@
+     let auth = Wserver.extract_param "authorization: " '\r' request in
+     if auth <> "" then
+       match
+-        try Some (Secure.open_in auth_file) with [ Sys_error _ -> None ]
++        try Some (open_in auth_file) with [ Sys_error _ -> None ]
+       with
+       [ Some ic ->
+           let auth =

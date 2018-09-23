@@ -1,0 +1,25 @@
+Goal: Add differentiated Makefile.inc files for optimized and non
+      optimised compilation.
+      Remove "-warn-error A". See : #521674
+--- /dev/null
++++ b/tools/Makefile.debian.opt
+@@ -0,0 +1,2 @@
++OCAMLC=ocamlc.opt -unsafe-string
++OCAMLOPT=ocamlopt.opt -unsafe-string
+--- /dev/null
++++ b/tools/Makefile.debian.out
+@@ -0,0 +1,2 @@
++OCAMLC=ocamlc -unsafe-string
++OCAMLOPT=ocamlopt -unsafe-string
+--- a/tools/Makefile.inc.unix
++++ b/tools/Makefile.inc.unix
+@@ -6,8 +6,7 @@
+ CAMLP5F=-DUNIX
+ CAMLP5D=+camlp5
+ LIBUNIX=-cclib -lunix
+-OCAMLC=ocamlc.opt -w -3 -warn-error +a-52 -safe-string
+-OCAMLOPT=ocamlopt.opt -w -3 -warn-error +a-52 -safe-string
++include $(GW_DIR)/tools/Makefile.debian
+ OCAMLI=
+ OCAMLD=
+ STRIP=strip
