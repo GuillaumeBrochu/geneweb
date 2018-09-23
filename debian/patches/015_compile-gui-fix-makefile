@@ -1,6 +1,17 @@
+From: GuillaumeBrochu <guillaume_brochu@yahoo.ca>
+Date: Sun, 23 Sep 2018 16:56:40 -0400
+Subject: _compile-gui-fix-makefile
+
+---
+ Makefile     | 11 ++++++++++-
+ gui/Makefile | 16 +++++++---------
+ 2 files changed, 17 insertions(+), 10 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index dcf209d..7c1b2cc 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -18,6 +18,7 @@
+@@ -18,6 +18,7 @@ out::
  	cd gwb2ged; $(MAKE) all
  	cd setup; $(MAKE) all
  	cd gwtp; $(MAKE) all
@@ -8,7 +19,7 @@
  
  opt::
  	cd wserver; $(MAKE) opt
-@@ -27,6 +28,7 @@
+@@ -27,6 +28,7 @@ opt::
  	cd gwb2ged; $(MAKE) opt
  	cd setup; $(MAKE) opt
  	cd gwtp; $(MAKE) opt
@@ -16,7 +27,7 @@
  
  install:
  	mkdir -p $(PREFIX)/bin
-@@ -77,6 +79,7 @@
+@@ -77,6 +79,7 @@ wrappers:
  	  echo -ne 'endlocal\r\n' >> $(DESTDIR)/gwsetup.bat; \
  	  echo -ne 'cd bases\r\n' >> $(DESTDIR)/gwsetup.bat; \
  	  echo -ne 'start /MIN ..\\gw\\gwsetup -lang fr -gd ..\\gw\r\n' >> $(DESTDIR)/gwsetup.bat; \
@@ -24,7 +35,7 @@
  	else \
  	  (echo '#!/bin/sh'; \
  	   echo 'cd `dirname $$0`'; \
-@@ -88,7 +91,9 @@
+@@ -88,7 +91,9 @@ wrappers:
  	   echo 'mkdir -p bases'; \
  	   echo 'cd bases'; \
  	   echo 'exec ../gw/gwsetup -gd ../gw "$$@"') > $(DESTDIR)/gwsetup; \
@@ -35,7 +46,7 @@
  	fi
  	if test $(shell uname -s) = "Darwin"; then \
  	  cp etc/MacOSX/GeneWeb.command $(DESTDIR); \
-@@ -110,6 +115,8 @@
+@@ -110,6 +115,8 @@ new_distrib: classical_distrib
  	cp setup/lang/*.htm $(DESTDIR)/gw/setup/lang/.
  	cp setup/lang/lexicon.txt $(DESTDIR)/gw/setup/lang/.
  	cp setup/gwsetup $(DESTDIR)/gw/gwsetup$(EXE)
@@ -44,7 +55,7 @@
  	cp LICENSE $(DESTDIR)/LICENSE.txt
  	cp etc/START.htm $(DESTDIR)/.
  	cp CHANGES $(DESTDIR)/CHANGES.txt
-@@ -162,6 +169,7 @@
+@@ -162,6 +169,7 @@ clean::
  	cd gwb2ged; $(MAKE) clean
  	cd setup; $(MAKE) clean
  	cd gwtp; $(MAKE) clean
@@ -52,11 +63,13 @@
  	$(RM) -rf $(DESTDIR)
  	$(RM) -f *~ .#*
  
-@@ -177,3 +185,4 @@
+@@ -177,3 +185,4 @@ depend:
  	cd gwb2ged; $(MAKE) depend
  	cd setup; $(MAKE) depend
  	cd gwtp; $(MAKE) depend
 +	cd gui; $(MAKE) depend
+diff --git a/gui/Makefile b/gui/Makefile
+index eda1316..f54e277 100644
 --- a/gui/Makefile
 +++ b/gui/Makefile
 @@ -2,16 +2,13 @@
@@ -79,7 +92,7 @@
  
  out:: gui.out
  	$(RM) gui
-@@ -20,6 +17,7 @@
+@@ -20,6 +17,7 @@ out:: gui.out
  opt:: gui.opt
  	$(RM) gui
  	cp gui.opt gui
@@ -87,7 +100,7 @@
  
  gui.out: $(OBJS)
  	$(OCAMLC) -I $(LABLGTK2) lablgtk.cma unix.cma $(OBJS) -o gui.out
-@@ -31,11 +29,11 @@
+@@ -31,11 +29,11 @@ clean::
  	$(RM) gui
  
  depend:

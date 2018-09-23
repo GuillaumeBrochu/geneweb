@@ -1,6 +1,17 @@
+From: GuillaumeBrochu <guillaume_brochu@yahoo.ca>
+Date: Sun, 23 Sep 2018 16:56:40 -0400
+Subject: _fix_gui_for_debian
+
+---
+ gui/gui.ml         | 82 +++++++++++++++++++++++++++++++++---------------------
+ gui/gw/gui_lex.txt | 26 +++++++++++++++--
+ 2 files changed, 73 insertions(+), 35 deletions(-)
+
+diff --git a/gui/gui.ml b/gui/gui.ml
+index 4e9308a..d3f70f5 100644
 --- a/gui/gui.ml
 +++ b/gui/gui.ml
-@@ -14,13 +14,17 @@
+@@ -14,13 +14,17 @@ type conf =
      waiting_pids : mutable list int }
  ;
  
@@ -23,7 +34,7 @@
  value trace = ref False;
  
  value default_lang =
-@@ -32,12 +36,9 @@
+@@ -32,12 +36,9 @@ value default_lang =
  
  value lang = ref default_lang;
  value lexicon_mtime = ref 0.0;
@@ -38,7 +49,7 @@
  
  (**/**) (* Gestion du dictionnaire des langues pour GUI. *)
  
-@@ -217,8 +218,7 @@
+@@ -218,8 +219,7 @@ value write_base_env conf bname env =
  ;
  
  value write_config_file conf = do {
@@ -48,7 +59,7 @@
    [ Some oc ->
        do {
          List.iter (fun (k, v) -> fprintf oc "%s=%s\n" k v) conf.gui_arg;
-@@ -256,7 +256,7 @@
+@@ -257,7 +257,7 @@ value config_browser () =
      [ "Win32" | "Cygwin" ->
          ["C:\\Program Files\\Mozilla Firefox\\firefox.exe";
           "C:\\Program Files\\Internet Explorer\\iexplore.exe"]
@@ -57,7 +68,7 @@
    in
    match List.filter Sys.file_exists default_browsers with
    [ [] -> None
-@@ -285,19 +285,24 @@
+@@ -286,19 +286,24 @@ value close_server conf =
        clean_waiting_pids conf;
        eprintf "Closing..."; flush stderr;
        (* Making a (empty) file STOP_SERVER to make the server stop. *)
@@ -95,7 +106,7 @@
        conf.server_running := None;
        eprintf "\n"; flush stderr;
      }
-@@ -753,7 +758,7 @@
+@@ -754,7 +759,7 @@ value rec show_main conf = do {
    in
    let icon name =
      let file =
@@ -104,7 +115,7 @@
      in
      let info = GDraw.pixmap_from_xpm ~file:file () in
      (GMisc.pixmap info ())#coerce
-@@ -1249,7 +1254,7 @@
+@@ -1250,7 +1255,7 @@ and launch_server conf = do {
    try Sys.remove stop_server with [ Sys_error _ -> () ];
    let prog = Filename.concat bin_dir "gwd" in
    let args =
@@ -113,7 +124,7 @@
    in
    let server_pid = exec prog args gwd_log gwd_log in
    let (pid, ps) = Unix.waitpid [Unix.WNOHANG] server_pid in
-@@ -1286,7 +1291,13 @@
+@@ -1287,7 +1292,13 @@ value launch_config () =
      let page_0 = GMisc.label
        ~text:(transl "This assistant will help you to setup GeneWeb") ()
      in
@@ -128,7 +139,7 @@
      let page_1 = GPack.hbox ~spacing:5 () in
      let _label = GMisc.label
        ~text:(transl "select bases directory")
-@@ -1308,7 +1319,7 @@
+@@ -1309,7 +1320,7 @@ value launch_config () =
             let num = assistant#current_page in
             let page = assistant#nth_page num in
             assistant#set_page_complete page (bases_dir.val <> "") }));
@@ -137,7 +148,7 @@
      let page_2 = GPack.hbox ~homogeneous:False ~spacing:5 () in
      let _label = GMisc.label
        ~text:(transl "enter port")
-@@ -1363,7 +1374,8 @@
+@@ -1364,7 +1375,8 @@ value launch_config () =
                 assistant#set_page_complete page btn#active }))
      | None -> () ];
      let page_4 = GMisc.label
@@ -147,20 +158,20 @@
      in
      ignore
        (assistant#append_page
-@@ -1373,6 +1385,12 @@
+@@ -1372,6 +1384,12 @@ value launch_config () =
+          ~page_type:`INTRO
+          ~complete:True
           page_0#as_widget);
-     ignore
-       (assistant#append_page
++    ignore
++      (assistant#append_page
 +         ~title:(transl "About geneweb-gui")
 +         ~page_type:`CONTENT
 +         ~complete:True
 +         page_0b#as_widget);
-+    ignore
-+      (assistant#append_page
+     ignore
+       (assistant#append_page
           ~title:(transl "Setup bases directory")
-          ~page_type:`CONTENT
-          page_1#as_widget);
-@@ -1389,7 +1407,7 @@
+@@ -1390,7 +1408,7 @@ value launch_config () =
           page_3#as_widget);
      ignore
        (assistant#append_page
@@ -169,9 +180,11 @@
           ~page_type: `CONFIRM
           ~complete:True
           page_4#as_widget);
+diff --git a/gui/gw/gui_lex.txt b/gui/gw/gui_lex.txt
+index 3fa16ac..7019707 100644
 --- a/gui/gw/gui_lex.txt
 +++ b/gui/gw/gui_lex.txt
-@@ -123,7 +123,7 @@
+@@ -123,7 +123,7 @@ fr: Configurez éventuellement le numéro de port
  
      select browser
  en: Select the browser you want to use
@@ -180,7 +193,7 @@
  
      save preferences
  en: Save preference
-@@ -145,8 +145,8 @@
+@@ -145,8 +145,8 @@ fr: Configuration du port
  en: Setup browser
  fr: Configuration du navigateur
  
@@ -191,7 +204,7 @@
  fr: Terminer
  
      Home
-@@ -200,3 +200,23 @@
+@@ -200,3 +200,23 @@ fr: Consang
      Update_nldb
  en: Update_nldb
  fr: Update_nldb

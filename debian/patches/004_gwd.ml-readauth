@@ -1,12 +1,17 @@
-Goal: allow auth file to be kept outside geneweb restricted environment
-Fixes: #287392
+From: GuillaumeBrochu <guillaume_brochu@yahoo.ca>
+Date: Sun, 23 Sep 2018 16:56:40 -0400
+Subject: _gwd.ml-readauth
 
 Status wrt upstream: will not be applied because of upstream design choices
+---
+ src/gwd.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
+diff --git a/src/gwd.ml b/src/gwd.ml
+index 783fd7b..a9c2146 100644
 --- a/src/gwd.ml
 +++ b/src/gwd.ml
-@@ -1388,7 +1388,7 @@
+@@ -1388,7 +1388,7 @@ value auth_err request auth_file =
      let auth = Wserver.extract_param "authorization: " '\r' request in
      if auth <> "" then
        match

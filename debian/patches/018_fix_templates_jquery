@@ -1,3 +1,14 @@
+From: GuillaumeBrochu <guillaume_brochu@yahoo.ca>
+Date: Sun, 23 Sep 2018 16:56:40 -0400
+Subject: _fix_templates_jquery
+
+---
+ hd/etc/js.txt      | 5 ++++-
+ hd/etc/welcome.txt | 1 -
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/hd/etc/js.txt b/hd/etc/js.txt
+index ce2324d..2c08d4e 100644
 --- a/hd/etc/js.txt
 +++ b/hd/etc/js.txt
 @@ -1 +1,4 @@
@@ -6,6 +17,8 @@
 +src="/javascript/jquery/jquery.min.js"></script>
 +<script language="javascript" type="text/javascript"
 +src="/javascript/jquery-placeholder/jquery.placeholder.js"></script>
+diff --git a/hd/etc/welcome.txt b/hd/etc/welcome.txt
+index a0dae82..f6aabab 100644
 --- a/hd/etc/welcome.txt
 +++ b/hd/etc/welcome.txt
 @@ -9,7 +9,6 @@

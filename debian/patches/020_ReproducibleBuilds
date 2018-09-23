@@ -1,6 +1,16 @@
+From: GuillaumeBrochu <guillaume_brochu@yahoo.ca>
+Date: Sun, 23 Sep 2018 16:56:40 -0400
+Subject: _ReproducibleBuilds
+
+---
+ src/Makefile | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index 03271e1..908f98b 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -61,8 +61,9 @@
+@@ -61,8 +61,9 @@ compilation.cmx: $(GWD_OBJS1:.cmo=.cmx) $(GWD_OBJS2.cmo=.cmx) gwd.cmx
  compilation.ml: always
  	> compilation.ml
  	echo "open Def;" >> compilation.ml

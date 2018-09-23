@@ -1,19 +1,36 @@
-Goal: Add differentiated Makefile.inc files for optimized and non
-      optimised compilation.
-      Remove "-warn-error A". See : #521674
+From: GuillaumeBrochu <guillaume_brochu@yahoo.ca>
+Date: Sun, 23 Sep 2018 16:56:40 -0400
+Subject: _Makefile.debian
+
+---
+ tools/Makefile.debian.opt | 2 ++
+ tools/Makefile.debian.out | 2 ++
+ tools/Makefile.inc.unix   | 3 +--
+ 3 files changed, 5 insertions(+), 2 deletions(-)
+ create mode 100644 tools/Makefile.debian.opt
+ create mode 100644 tools/Makefile.debian.out
+
+diff --git a/tools/Makefile.debian.opt b/tools/Makefile.debian.opt
+new file mode 100644
+index 0000000..1230922
 --- /dev/null
 +++ b/tools/Makefile.debian.opt
 @@ -0,0 +1,2 @@
 +OCAMLC=ocamlc.opt -unsafe-string
 +OCAMLOPT=ocamlopt.opt -unsafe-string
+diff --git a/tools/Makefile.debian.out b/tools/Makefile.debian.out
+new file mode 100644
+index 0000000..ab9938f
 --- /dev/null
 +++ b/tools/Makefile.debian.out
 @@ -0,0 +1,2 @@
 +OCAMLC=ocamlc -unsafe-string
 +OCAMLOPT=ocamlopt -unsafe-string
+diff --git a/tools/Makefile.inc.unix b/tools/Makefile.inc.unix
+index 676eb99..ba53046 100644
 --- a/tools/Makefile.inc.unix
 +++ b/tools/Makefile.inc.unix
-@@ -6,8 +6,7 @@
+@@ -6,8 +6,7 @@ CAMLP5_COMM=TOP=$(TOP) $(TOP)/tools/camlp5_comm.sh
  CAMLP5F=-DUNIX
  CAMLP5D=+camlp5
  LIBUNIX=-cclib -lunix

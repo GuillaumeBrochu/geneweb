@@ -1,13 +1,17 @@
-Goal: Better German translation (attempt)
-Fixes: #176408
+From: GuillaumeBrochu <guillaume_brochu@yahoo.ca>
+Date: Sun, 23 Sep 2018 16:56:40 -0400
+Subject: _de-translation
 
 Status wrt upstream: Not applied and not proposed
+---
+ hd/lang/lexicon.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Index: b/hd/lang/lexicon.txt
-===================================================================
---- a/hd/lang/lexicon.txt	2009-11-08 17:26:10.000000000 +0100
-+++ b/hd/lang/lexicon.txt	2009-11-08 17:26:26.000000000 +0100
-@@ -1489,7 +1489,7 @@
+diff --git a/hd/lang/lexicon.txt b/hd/lang/lexicon.txt
+index b6310d9..5d1107b 100644
+--- a/hd/lang/lexicon.txt
++++ b/hd/lang/lexicon.txt
+@@ -1489,7 +1489,7 @@ br: goude
  ca: després de
  cs: po
  da: efter
@@ -16,7 +20,7 @@ Index: b/hd/lang/lexicon.txt
  en: after
  eo: post
  es: después de
-@@ -2108,7 +2108,7 @@
+@@ -2108,7 +2108,7 @@ br: a-raok
  ca: abans de
  cs: pøed
  da: før
