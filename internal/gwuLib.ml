@@ -277,6 +277,19 @@ module Make (Select : Select) =
       print_title_date_option oc t_date_end;
       if t.t_nth <> 0 then Printf.fprintf oc ":%d" t.t_nth;
       Printf.fprintf oc "]"
+    let zero_birth_is_required base is_child p =
+      if get_baptism p <> Adef.cdate_None then false
+      else
+        begin match get_death p with
+          Death (_, _) | DeadYoung | DeadDontKnowWhen | OfCourseDead ->
+            true
+        | DontKnowIfDead
+          when
+            not is_child && not (has_infos_not_dates base p) &&
+            p_first_name base p <> "?" && p_surname base p <> "?" ->
+            true
+        | _ -> false
+        end
     let print_infos oc base is_child csrc cbp p =
       List.iter (print_first_name_alias oc base) (get_first_names_aliases p);
       List.iter (print_surname_alias oc base) (get_surnames_aliases p);
@@ -298,18 +311,8 @@ module Make (Select : Select) =
       print_if_not_equal_to csrc oc base "#src" (get_psources p);
       begin match Adef.od_of_cdate (get_birth p) with
         Some d -> Printf.fprintf oc " "; print_date oc d
-      | _ ->
-          if get_baptism p <> Adef.cdate_None then ()
-          else
-            match get_death p with
-              Death (_, _) | DeadYoung | DeadDontKnowWhen | OfCourseDead ->
-                Printf.fprintf oc " 0"
-            | DontKnowIfDead
-              when
-                not is_child && not (has_infos_not_dates base p) &&
-                p_first_name base p <> "?" && p_surname base p <> "?" ->
-                Printf.fprintf oc " 0"
-            | _ -> ()
+      | _ when zero_birth_is_required base is_child p -> Printf.fprintf oc " 0"
+      | _ -> ()
       end;
       print_if_not_equal_to cbp oc base "#bp" (get_birth_place p);
       print_if_no_empty oc base "#bs" (get_birth_src p);
@@ -742,9 +745,6 @@ module Make (Select : Select) =
       Printf.fprintf oc "beg\n";
       print_child oc base string_quest "" "" p;
       Printf.fprintf oc "end\n"
-    let has_infos_isolated base p =
-      has_infos_not_dates base p || get_birth p <> Adef.cdate_None ||
-      get_baptism p <> Adef.cdate_None
     let print_family oc base gen m =
       let fam = m.m_fam in
       Printf.fprintf oc "fam ";
