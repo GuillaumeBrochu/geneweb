@@ -14,6 +14,7 @@ module Make (Select : Select) =
     open Def
     open Gwdb
     let old_gw = ref false
+    let std_fields = ref false
     let put_events_in_notes base p =
       (* Si on est en mode old_gw, on mets tous les évènements *)
       (* dans les notes.                                       *)
@@ -282,6 +283,7 @@ module Make (Select : Select) =
       if t.t_nth <> 0 then Printf.fprintf oc ":%d" t.t_nth;
       Printf.fprintf oc "]"
     let print_infos oc base is_child csrc cbp p =
+      let use_std_fields = !old_gw || !std_fields in
       List.iter (print_first_name_alias oc base) (get_first_names_aliases p);
       List.iter (print_surname_alias oc base) (get_surnames_aliases p);
       begin match get_public_name p with
@@ -300,7 +302,7 @@ module Make (Select : Select) =
       end;
       print_if_no_empty oc base "#occu" (get_occupation p);
       print_if_not_equal_to csrc oc base "#src" (get_psources p);
-      if !old_gw then
+      if use_std_fields then
         begin
           begin match Adef.od_of_cdate (get_birth p) with
             Some d -> Printf.fprintf oc " "; print_date oc d
@@ -344,7 +346,7 @@ module Make (Select : Select) =
           | Disappeared -> Printf.fprintf oc "s"
           | _ -> ()
           end;
-          if !old_gw then print_date oc (Adef.date_of_cdate d)
+          if use_std_fields then print_date oc (Adef.date_of_cdate d)
           else Printf.fprintf oc "0(D)"
       | DeadYoung -> Printf.fprintf oc " mj"
       | DeadDontKnowWhen -> Printf.fprintf oc " 0"
@@ -358,7 +360,7 @@ module Make (Select : Select) =
       | OfCourseDead -> Printf.fprintf oc " od"
       | NotDead -> ()
       end;
-      if !old_gw then
+      if use_std_fields then
         begin
           print_if_no_empty oc base "#dp" (get_death_place p);
           print_if_no_empty oc base "#ds" (get_death_src p);
@@ -766,10 +768,11 @@ module Make (Select : Select) =
       get_baptism p <> Adef.cdate_None
     let print_family oc base gen m =
       let fam = m.m_fam in
+      let use_std_fields = !old_gw || !std_fields in
       Printf.fprintf oc "fam ";
       print_parent oc base gen m.m_fath;
       Printf.fprintf oc " +";
-      if !old_gw then
+      if use_std_fields then
         print_date_option oc (Adef.od_of_cdate (get_marriage fam));
       begin match get_relation fam with
         NotMarried -> Printf.fprintf oc " #nm"
@@ -793,7 +796,7 @@ module Make (Select : Select) =
           Printf.fprintf oc " #nsckm %c%c" (c m.m_fath) (c m.m_moth)
       | NoMention -> Printf.fprintf oc " #noment"
       end;
-      if !old_gw then
+      if use_std_fields then
         begin
           print_if_no_empty oc base "#mp" (get_marriage_place fam);
           print_if_no_empty oc base "#ms" (get_marriage_src fam);
@@ -807,7 +810,7 @@ module Make (Select : Select) =
       Printf.fprintf oc " ";
       print_parent oc base gen m.m_moth;
       Printf.fprintf oc "\n";
-      if !old_gw then
+      if use_std_fields then
         Array.iter
           (fun ip ->
              if gen.per_sel ip then
@@ -831,7 +834,7 @@ module Make (Select : Select) =
         | _ -> ""
       in
       let cbp =
-        if !old_gw then
+        if use_std_fields then
           match common_children_birth_place base m.m_chil with
             Some s -> Printf.fprintf oc "cbp %s\n" (s_correct_string s); s
           | _ -> ""
@@ -1821,6 +1824,10 @@ module Make (Select : Select) =
         censored.";
        "-old_gw", Arg.Set old_gw, ": Do not export additional fields \
                                    (for backward compatibility: < 7.00)";
+       "-export_std_fields", Arg.Set std_fields,
+       ":\n     \
+        Export redundant standard fields\
+        (like early 7.00-exp releases)";
        "-raw", Arg.Set raw_output,
        "raw output (without possible utf-8 conversion)";
        "-v", Arg.Set Mutil.verbose, "verbose";
