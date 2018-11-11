@@ -5,12 +5,10 @@ CAMLP5_COMM=$D/camlp5_comm.sh -I $(GWB)/src pa_macro.cmo
 CAMLP5F=-DUNIX
 CAMLP5D=`camlp5 -where`
 LIBUNIX=-cclib -lunix
-OCAMLC=ocamlc.opt
-OCAMLOPT=ocamlopt.opt
+include $(GWB)/tools/Makefile.debian
 OCAMLI=
 RM=/bin/rm -f
 EXE=
-TEST_DIR=test $$(basename "$<") = "$<" || { echo "*** cannot make '$@'"; echo "*** please run 'make' in directory '$$(dirname "$<")' first"; exit 1; }
 
 all::
 opt::

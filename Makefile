@@ -19,6 +19,7 @@ out::
 	cd setup; $(MAKE) all
 	cd gwtp; $(MAKE) all
 	cd gui; $(MAKE) all
+	cd contrib/gwbase/etc; $(MAKE) connex.out; mv connex.out connex
 
 opt::
 	cd wserver; $(MAKE) opt
@@ -29,6 +30,7 @@ opt::
 	cd setup; $(MAKE) opt
 	cd gwtp; $(MAKE) opt
 	cd gui; $(MAKE) opt
+	cd contrib/gwbase/etc; $(MAKE) connex.opt; mv connex.opt connex; $(STRIP) connex
 
 install:
 	mkdir -p $(PREFIX)/bin
@@ -114,6 +116,7 @@ new_distrib: classical_distrib
 	cp setup/gwsetup $(DESTDIR)/gw/gwsetup$(EXE)
 	cp gui/gw/gui_lex.txt $(DESTDIR)/gw/.
 	cp gui/gui $(DESTDIR)/gw/gui$(EXE)
+	cp contrib/gwbase/etc/connex $(DESTDIR)/gw/connex$(EXE)
 	cp LICENSE $(DESTDIR)/LICENSE.txt
 	cp etc/START.htm $(DESTDIR)/.
 	cp CHANGES $(DESTDIR)/CHANGES.txt
@@ -183,3 +186,4 @@ depend:
 	cd setup; $(MAKE) depend
 	cd gwtp; $(MAKE) depend
 	cd gui; $(MAKE) depend
+	cp contrib/gwbase/etc; $(MAKE) depend
