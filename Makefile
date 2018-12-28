@@ -18,6 +18,7 @@ out::
 	cd gwb2ged; $(MAKE) all
 	cd setup; $(MAKE) all
 	cd gwtp; $(MAKE) all
+	cd gui; $(MAKE) all
 
 opt::
 	cd wserver; $(MAKE) opt
@@ -27,6 +28,7 @@ opt::
 	cd gwb2ged; $(MAKE) opt
 	cd setup; $(MAKE) opt
 	cd gwtp; $(MAKE) opt
+	cd gui; $(MAKE) opt
 
 install:
 	mkdir -p $(PREFIX)/bin
@@ -110,6 +112,8 @@ new_distrib: classical_distrib
 	cp setup/lang/*.htm $(DESTDIR)/gw/setup/lang/.
 	cp setup/lang/lexicon.txt $(DESTDIR)/gw/setup/lang/.
 	cp setup/gwsetup $(DESTDIR)/gw/gwsetup$(EXE)
+	cp gui/gw/gui_lex.txt $(DESTDIR)/gw/.
+	cp gui/gui $(DESTDIR)/gw/gui$(EXE)
 	cp LICENSE $(DESTDIR)/LICENSE.txt
 	cp etc/START.htm $(DESTDIR)/.
 	cp CHANGES $(DESTDIR)/CHANGES.txt
@@ -162,6 +166,7 @@ clean::
 	cd gwb2ged; $(MAKE) clean
 	cd setup; $(MAKE) clean
 	cd gwtp; $(MAKE) clean
+	cd gui; $(MAKE) clean
 	$(RM) -rf $(DESTDIR)
 	$(RM) -f *~ .#*
 
@@ -177,3 +182,4 @@ depend:
 	cd gwb2ged; $(MAKE) depend
 	cd setup; $(MAKE) depend
 	cd gwtp; $(MAKE) depend
+	cd gui; $(MAKE) depend

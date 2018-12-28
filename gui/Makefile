@@ -2,16 +2,12 @@
 # Copyright (c) 2006-2007 INRIA
 
 include ../tools/Makefile.inc
-
-LABLGTK2=+lablgtk2
-OCAMLC=ocamlc.opt
-OCAMLOPT=ocamlopt.opt -annot
+LABLGTK2=`ocamlfind query lablgtk2`/
 GWB=..
 OBJS=../src/version.cmo ../src/iovalue.cmo ../src/buff.cmo ../src/name.cmo ../src/mutil.cmo gui.cmo
 OCAMLI=-I ../src -I $(LABLGTK2)
-TEST_DIR=test $$(basename "$<") = "$<" || { echo "Please run 'make' in directory '$$(dirname "$<")' first"; exit 1; }
 
-all:: opt
+all:: out
 
 out:: gui.out
 	$(RM) gui
@@ -20,6 +16,7 @@ out:: gui.out
 opt:: gui.opt
 	$(RM) gui
 	cp gui.opt gui
+	$(STRIP) gui
 
 gui.out: $(OBJS)
 	$(OCAMLC) -I $(LABLGTK2) lablgtk.cma unix.cma $(OBJS) -o gui.out
@@ -31,11 +28,9 @@ clean::
 	$(RM) gui
 
 depend:
-	export LC_ALL=C; TOP=$(GWB) $(GWB)/tools/camlp5_depend.sh $(OCAMLI) $$(ls *.mli *.ml) | sed -e 's|\.\.|$$(GWB)|g' > .depend.new
-	mv .depend.new .depend
+	$(ROOT)/tools/camlp5_depend.sh $(CAMLP5F) $(OCAMLI) -- *.ml* > .depend
 
 %.cmo: %.ml
-	@$(TEST_DIR)
-	ocamlc -pp camlp5r $(OCAMLI) -I +lablgtk2 -c $<
+	$(OCAMLC) -pp camlp5r $(OCAMLI) -I $(LABLGTK2) -c $<
 
 include .depend
