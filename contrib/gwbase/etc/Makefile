@@ -121,4 +121,7 @@ clavier.out: $(CLAVIER_OBJS)
 depend:
 	$(GWB)/tools/camlp5_depend.sh $(CAMLP5F) $(OCAMLI) -- *.ml* > .depend
 
+clean::
+	$(RM) connex
+
 include .depend

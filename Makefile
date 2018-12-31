@@ -170,6 +170,7 @@ clean::
 	cd setup; $(MAKE) clean
 	cd gwtp; $(MAKE) clean
 	cd gui; $(MAKE) clean
+	cd contrib/gwbase/etc; $(MAKE) clean
 	$(RM) -rf $(DESTDIR)
 	$(RM) -f *~ .#*
 
