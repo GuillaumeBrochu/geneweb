@@ -1,0 +1,2 @@
+OCAMLC=ocamlc.opt -warn-error +a-3 -safe-string
+OCAMLOPT=ocamlopt.opt -warn-error +a-3 -safe-string
