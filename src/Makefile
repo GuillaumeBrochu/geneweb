@@ -35,7 +35,7 @@ out:: def_syn.cmo ansel.cmo gwc1.out gwc2.out consang.out gwd.out gwu.out update
 	cp update_nldb.out update_nldb
 	cp check_base.out check_base
 
-opt:: def_syn.cmo ansel.cmx gwc1.opt gwc2.opt consang.opt link.opt gwd.opt gwu.opt update_nldb.opt check_base.opt
+opt:: def_syn.cmo ansel.cmx gwc1.opt gwc2.opt consang.opt gwd.opt gwu.opt update_nldb.opt check_base.opt
 	$(RM) gwc consang gwd gwu
 	cp gwc1.opt gwc
 	cp gwc1.opt gwc1
@@ -94,10 +94,6 @@ consang.out: $(CONSANG_OBJS)
 consang.opt: $(CONSANG_OBJS:.cmo=.cmx)
 	$(OCAMLOPT) $(STATIC) unix.cmxa $(LIBUNIX) $(CONSANG_OBJS:.cmo=.cmx) -o consang.opt
 
-link.opt: config.cmi
-	$(OCAMLOPT) -I ../api/service -c ../api/service/api_link_tree_piqi.ml
-	$(OCAMLOPT) -I ../api/service -c ../api/service/api_link_tree_piqi_ext.ml
-	$(OCAMLOPT) -I ../api/service -package curl -I $(OCURL) curl.cmxa -I ../wserver -c link.ml
 
 gwd.out: $(GWD_OBJS)
 	$(OCAMLC) -custom $(STATIC) $(OCAMLD) unix.cma str.cma -I $(CAMLP5D) gramlib.cma $(GWD_OBJS) $(LIBUNIX) -o gwd.out

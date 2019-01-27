@@ -1,4 +1,4 @@
-CAMLP5D=+camlp5
+CAMLP5D=/home/guillaume/.opam/3.12.1/lib/camlp5
 MYSQL=
 OCURL=
 OREDIS=
