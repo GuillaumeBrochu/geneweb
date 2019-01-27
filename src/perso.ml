@@ -2,11 +2,6 @@
 (* $Id: perso.ml,v 5.82 2007-09-12 09:58:44 ddr Exp $ *)
 (* Copyright (c) 1998-2007 INRIA *)
 
-
-module MLink = Api_link_tree_piqi;
-module MLinkext = Api_link_tree_piqi_ext;
-
-
 open Config;
 open Def;
 open Gutil;
